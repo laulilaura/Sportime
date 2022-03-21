@@ -19,6 +19,21 @@ exports.createUser = (req, res) => {
     .catch((error) => {return res.status(400).json({error}) });
 }
 
+exports.getAllUsers = (req, res) => {
+
+    User.find()
+    .then((users) => { return res.status(200).json({users})})
+    .catch((error) => { return res.status(400).json({error})});
+}
+
+exports.getOneUserById = (req, res) => {
+    const idUser = req.params.id;
+
+    User.findOne({_id: idUser})
+    .then((user) => { return res.status(200).json({user})})
+    .catch((error) => { return res.status(400).json({error})});
+}
+
 exports.getOneUserByUsername = (req, res) => {
     const username = req.params.username;
 
@@ -27,17 +42,18 @@ exports.getOneUserByUsername = (req, res) => {
     .catch((error) => { return res.status(400).json({error})});
 }
 
-exports.getAllUsers = (req, res) => {
-
-    User.find()
-    .then((users) => { return res.status(200).json({users})})
-    .catch((error) => { return res.status(400).json({error})});
-}
-
 exports.getUsersByTeam = (req, res) => {
     const idTeam = req.params.idTeam;
 
     User.find({team: idTeam})
+    .then((user) => { return res.status(200).json({user})})
+    .catch((error) => { return res.status(400).json({error})});
+}
+
+exports.getUsersByVilleFav = (req, res) => {
+    const ville_favorite = req.params.ville_fav;
+
+    User.find({ville_fav: ville_favorite})
     .then((user) => { return res.status(200).json({user})})
     .catch((error) => { return res.status(400).json({error})});
 }

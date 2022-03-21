@@ -13,7 +13,7 @@ exports.createTeam = (req, res) => {
 exports.getOneTeamById = (req, res) => {
     const idTeam = req.params.idTeam;
 
-    Team.findOne({idTeam: idTeam})
+    Team.findOne({_id: idTeam})
     .then((team) => { return res.status(200).json({team})})
     .catch((error) => { return res.status(400).json({error})});
 }
