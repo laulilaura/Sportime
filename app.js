@@ -10,7 +10,7 @@ const routeTeam = require('./router/teamRouter');
 const routeSport = require('./router/sportRouter');
 const routeSpot = require('./router/spotRouter');
 
-mongoose.connect('mongodb+srv://admin:XTAX6SHgpdz7emUh@sportimeapi.eybb5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+mongoose.connect('mongodb+srv://admin:Pol060592873ca@sportimeapi.eybb5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
 {
     useNewUrlParser: true, useUnifiedTopology: true
 }).then(() => {

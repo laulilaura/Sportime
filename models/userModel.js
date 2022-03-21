@@ -27,12 +27,13 @@
     dateNaissance :{
         type: Date,
         required: true,
-        min: '2009-01-01'
+        max: '2009-01-01'
     },
     mdp: {
         type: String,
         required: true
-    }
+    },
+    team: {type: mongoose.Schema.Types.ObjectId, ref: 'team'}
 
  });
 

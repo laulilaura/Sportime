@@ -33,3 +33,11 @@ exports.getAllUsers = (req, res) => {
     .then((users) => { return res.status(200).json({users})})
     .catch((error) => { return res.status(400).json({error})});
 }
+
+exports.getUsersByTeam = (req, res) => {
+    const idTeam = req.params.idTeam;
+
+    User.find({team: idTeam})
+    .then((user) => { return res.status(200).json({user})})
+    .catch((error) => { return res.status(400).json({error})});
+}
