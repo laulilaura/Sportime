@@ -6,5 +6,9 @@ router.post('/', TeamCtrl.createTeam);
 router.get('/', TeamCtrl.getAllTeams);
 router.get('/:idTeam', TeamCtrl.getOneTeamById);
 
+router.put('/:id', TeamCtrl.putTeam);
+
+router.delete('/:id', TeamCtrl.delTeam);
+
 module.exports = router;
 
