@@ -22,7 +22,8 @@
         type: String
     },
     tel: {
-        type: Number
+        type: Number,
+        required: true
     },
     dateNaissance :{
         type: Date,

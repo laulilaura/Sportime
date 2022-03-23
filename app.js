@@ -12,6 +12,10 @@ const routeSpot = require('./router/spotRouter');
 const routePratique = require('./router/pratiqueRouter');
 const routePresent = require('./router/EstPresentRouter');
 
+// body-parser
+app.use(bodyParser.urlencoded ({ extended: true }));
+app.use(bodyParser.json());
+
 mongoose.connect('mongodb+srv://admin:Pol060592873ca@sportimeapi.eybb5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
 {
     useNewUrlParser: true, useUnifiedTopology: true
