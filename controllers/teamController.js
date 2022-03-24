@@ -19,7 +19,6 @@ exports.getOneTeamById = (req, res) => {
 }
 
 exports.getAllTeams = (req, res) => {
-
     Team.find()
     .then((team) => { return res.status(200).json({team})})
     .catch((error) => { return res.status(400).json({error})});

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Home page</title>
+    <script type="text/javascript" async>
+        let monId = sessionStorage.getItem("_id");
+        console.log(monId);
+
+        async function recupUsername(){
+            let repUser = await fetch("/api/utilisateur/"+monId, {
+                method: "GET",
+                headers: {'Content-Type': 'application/json'}
+            });
+            // Récupère mon user
+            let myUser =  await repUser.json()
+            // Récupère mon username
+            var myUsername = myUser.user.username;
+            console.log(myUsername);
+            // Récupère mon élément
+            // -- RECUPERE MON ELEMENT MAIS COMME SI COPIE* CAR N'EST PAS AFFECTE DANS LE HTML
+            document.getElementById("monUsername").textContent = myUsername;
+            console.log(document.getElementById("monUsername").textContent);
+
+            return myUsername;
+        };
+        recupUsername();
+    </script>
+</head>
+
+<body>
+    <h1>Mon profil</h1>
+    <h1 id="monUsername"></h1>
+    </br>
+
+    <a href="/entrainement.html">S'entrainer</a>
+</body>
+</html>

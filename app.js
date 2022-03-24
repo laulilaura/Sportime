@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require("path");
 const app = express();
 
 // Route API
@@ -26,11 +27,14 @@ mongoose.connect('mongodb+srv://admin:Pol060592873ca@sportimeapi.eybb5.mongodb.n
 });
 
 app.use(bodyParser.json());
-app.use('/api/utilisateur/', routeUtilisateurs);;
+app.use('/api/utilisateur/', routeUtilisateurs);
 app.use('/api/team/', routeTeam);
 app.use('/api/sport/', routeSport);
 app.use('/api/spot/', routeSpot);
 app.use('/api/pratique/', routePratique);
 app.use('/api/estpresent/', routePresent);
 
+app.use(express.static(path.join(__dirname, 'views')));
+
 module.exports = app;
+

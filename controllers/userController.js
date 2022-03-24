@@ -42,7 +42,7 @@ exports.createUser = (req, res) => {
                     })
                     .then((newUser) => {
                         console.log(newUser);
-                        return res.status(201).json({'eleveId': newUser.id});
+                        return res.status(201).json({'userId': newUser.id});
                     })
                     .catch((err) => {
                         return res.status(400).json({err});
@@ -68,6 +68,7 @@ exports.loginUser = (req, res) => {
 
     User.findOne({username: username})
     .then((userFound) => {
+        console.log(userFound);
         if (userFound) {
             bcrypt.compare(mdp, userFound.mdp, function(errBycrypt, resBycrypt) {
                 if(resBycrypt) {

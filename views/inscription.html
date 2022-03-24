@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Inscription - Sportime</title>
+</head>
+
+<body>
+<!-- BODY -->
+<div id="inscription">
+  <form action="javascript:inscription()">
+    <label for="username">Votre nom d'utilisateur :</label>
+    <input type="text" name="username" id="username" />
+    <br/>
+    <label for="nom">Votre nom :</label>
+    <input type="text" name="nom" id="nom" />
+    <br/>
+    <label for="prenom">Votre prenom :</label>
+    <input type="text" name="prenom" id="prenom" />
+    <br/>
+    <label for="ville_fav">Votre ville favorite :</label>
+    <input type="text" name="ville_fav" id="ville_fav" />
+    <br/>
+    <label for="tel">Votre téléphone :</label>
+    <input type="tel" name="tel" id="tel" />
+    <br/>
+    <label for="dateNaissance">Votre date de naissance :</label>
+    <input type="date" name="dateNaissance" id="dateNaissance" />
+    <br/>
+    <label for="mdp">Votre mot de passe :</label>
+    <input type="password" name="mdp" id="mdp" />
+    <br/>
+    <input type="submit" value="Inscription !">
+  </form>
+</div>
+  
+<!-- FOOTER -->
+      <footer class="footer">
+        <ul>
+          <li><a href="#aPropos">À propos</a></li>
+          <li><a href="#politique">Politique de confidentialité</a></li>
+          <li><a href="#session">Session</a></li>
+          <li><a href="#reseaux">Réseaux sociaux</a></li>
+        </ul>
+      </footer>
+    </div> 
+
+<!--Js -->
+    <script>
+      async function inscription(){
+        let data = {username: document.getElementById("username").value,
+                  nom: document.getElementById("nom").value,
+                  prenom: document.getElementById("prenom").value,
+                  ville_fav: document.getElementById("ville_fav").value,
+                  tel: document.getElementById("tel").value,
+                  dateNaissance: document.getElementById("dateNaissance").value,
+                  mdp: document.getElementById("mdp").value
+                  }
+        let repUserCreate = await fetch("/api/utilisateur", {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'}, 
+        body: JSON.stringify(data)
+      });
+      let myUser =  await repUserCreate.json()
+      let monIdDUSER = myUser.userId;
+      sessionStorage.setItem("_id", monIdDUSER);
+      window.location.href="/home.html"
+      };
+    </script>
+    
+  </body>
+</html>
