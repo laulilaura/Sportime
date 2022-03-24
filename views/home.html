@@ -5,8 +5,7 @@
     <title>Home page</title>
     <script type="text/javascript" async>
         let monId = sessionStorage.getItem("_id");
-        console.log(monId);
-
+        // RECUPERER LE USERNAME
         async function recupUsername(){
             let repUser = await fetch("/api/utilisateur/"+monId, {
                 method: "GET",
@@ -18,21 +17,79 @@
             var myUsername = myUser.user.username;
             console.log(myUsername);
             // Récupère mon élément
-            // -- RECUPERE MON ELEMENT MAIS COMME SI COPIE* CAR N'EST PAS AFFECTE DANS LE HTML
             document.getElementById("monUsername").textContent = myUsername;
-            console.log(document.getElementById("monUsername").textContent);
 
-            return myUsername;
         };
         recupUsername();
+
+        // RECUPERER LA TERAM SI IL Y A
+        async function recupTeam(){
+            let repUser = await fetch("/api/utilisateur/"+monId, {
+                method: "GET",
+                headers: {'Content-Type': 'application/json'}
+            });
+            // Récupère mon user
+            let myUser =  await repUser.json()
+            // Récupère mon id de Team
+            var myIdTeam = myUser.user.team;
+
+            let repTeam = await fetch("/api/team/"+myIdTeam, {
+                method: "GET",
+                headers: {'Content-Type': 'application/json'}
+            });
+            // Récupère mon user
+            let myTeamInfo =  await repTeam.json()
+
+            console.log(myTeamInfo);
+            if(myTeamInfo != null){
+            // Récupère mon élément et ajoute si une team ses caractéristique
+            document.getElementById("entrainements").insertAdjacentHTML("afterend",
+                "<ul><li>"+myTeamInfo.team.nomTeam+"</li><li>"+myTeamInfo.team.Description+"</li><li>"+myTeamInfo.team.dateCreation+"</li></ul>");
+            }else {
+                document.getElementById("entrainements").insertAdjacentHTML("afterend",
+                "<p>Tu n'as pas encore de Team !</p>");
+            }
+        };
+        recupTeam();
     </script>
 </head>
 
 <body>
-    <h1>Mon profil</h1>
-    <h1 id="monUsername"></h1>
-    </br>
+    <!-- HEADER -->
+    <header class="header">
+        <ul>
+          <li><a href="">Acceuil</a></li>
+          <li><a href="/entrainement.html">Entrainements</a></li>
+          <li><a href="/index.html">Déconnexion</a></li>
+        </ul>
+      </footer>
+    </div> 
 
-    <a href="/entrainement.html">S'entrainer</a>
+    <div id="profil">
+        <h1>Mon profil</h1>
+        <h1 id="monUsername"></h1>
+    </div>
+
+    <a href="/entrainement.html" id="entrainements">Entrainement</a>
+    <div id="team">
+        <h1>Ma Team</h1>
+        <ul>
+            <li id="nomTeam"></li>
+            <li id="descriptionTeam"></li>
+            <li id="dateCreationTeam"></li>
+        </ul>
+        
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <ul>
+          <li><a href="#aPropos">À propos</a></li>
+          <li><a href="#politique">Politique de confidentialité</a></li>
+          <li><a href="#session">Session</a></li>
+          <li><a href="#reseaux">Réseaux sociaux</a></li>
+        </ul>
+      </footer>
+    </div> 
 </body>
 </html>

@@ -147,13 +147,14 @@ exports.putUser = (req, res) => {
     User.findOne({_id: id})
     .then ((user) => {
         bcrypt.hash(mdp, 5, function( err, bcryptedPassword ){
-            user.username = req.body.username,
-            user.prenom = req.body.prenom,
-            user.nom = req.body.nom,
-            user.ville_fav = req.body.ville_fav,
-            user.tel = req.body.tel,
-            user.dateNaissance = req.body.dateNaissance,
-            user.team = req.body.team,
+            console.log(user);
+            user.username = (req.body.username ? req.body.username : user.username),
+            user.prenom = (req.body.prenom ? req.body.prenom : user.prenom),
+            user.nom = (req.body.nom ? req.body.nom : user.nom),
+            user.ville_fav = (req.body.ville_fav ? req.body.ville_fav : user.ville_fav),
+            user.tel = (req.body.tel ? req.body.tel : user.tel),
+            user.dateNaissance = (req.body.dateNaissance ? req.body.dateNaissance : user.dateNaissance),
+            user.team = (req.body.team ? req.body.team : user.team),
             user.mdp = bcryptedPassword
             user.save()
             .then((user) => {
