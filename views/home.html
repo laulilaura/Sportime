@@ -97,6 +97,40 @@
             });
 
             btnSupprimerUser.addEventListener('click', deleteUser);
+
+            // AJOUTER UNE TEAM
+            const ajouterTeam = document.getElementById("ajouterTeam");
+            const divAjoutTeam = document.getElementById("divAjoutTeam");
+            const validerTeam = document.getElementById("validerTeam");
+            const annulerTeam = document.getElementById("annulerTeam");
+            
+            // Init
+            divAjoutTeam.style.display = "none";
+            ajouterTeam.style.display = "block";
+            validerTeam.style.display = "none";
+            annulerTeam.style.display = "none";
+
+            ajouterTeam.addEventListener('click', function() {
+                divAjoutTeam.style.display = "block";
+                ajouterTeam.style.display = "none";
+                validerTeam.style.display = "block";
+                annulerTeam.style.display = "block";
+            });
+            validerTeam.addEventListener('click', function() {
+                divAjoutTeam.style.display = "none";
+                ajouterTeam.style.display = "block";
+                validerTeam.style.display = "none";
+                annulerTeam.style.display = "none";
+                // AJOUTER TEAM
+                console.log("ajout team validé");
+            });
+            annulerTeam.addEventListener('click', function() {
+                divAjoutTeam.style.display = "none";
+                ajouterTeam.style.display = "block";
+                validerTeam.style.display = "none";
+                annulerTeam.style.display = "none";
+                console.log("ajout team validé");
+            });
         }
 
         // MODIFIER USER 
@@ -130,6 +164,8 @@
             sessionStorage.setItem("_id", "");
             window.location.href="/index.html";
         };
+
+        
 
     </script>
 </head>
@@ -202,7 +238,13 @@
     <!-- TEAM -->
     <div id="team">
         <h1 id="maTeamAMoi">Ma Team</h1>
-        <!--<button id="ajouterTeam">Ajouter une team</button>-->
+        <button id="ajouterTeam">Ajouter une team</button>
+        <div id="divAjoutTeam">
+            <p>Ce texte appartient au premier div de ma page</p>
+            <p>Ce deuxième paragraphe également</p>
+            <button id="annulerTeam">Annuler</button>
+            <button id="validerTeam">Ajouter cette team</button>
+        </div>
     </div>
 
     <!-- FOOTER -->
@@ -216,6 +258,8 @@
       </footer>
     </div> 
 </body>
+
+<!-- STYLE POUR LES POP-UP-->
 <style>
     #openBtnSup, #closeBtnSup {
         border: none;
