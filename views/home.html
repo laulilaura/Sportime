@@ -3,26 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Home page</title>
-    <script type="text/javascript" async>
+    <script >
+        // Get Storage
         let monId = sessionStorage.getItem("_id");
+
         // RECUPERER LE USERNAME
-        async function recupUsername(){
+        async function recupUserInfo(){
             let repUser = await fetch("/api/utilisateur/"+monId, {
                 method: "GET",
                 headers: {'Content-Type': 'application/json'}
             });
             // Récupère mon user
             let myUser =  await repUser.json()
-            // Récupère mon username
-            var myUsername = myUser.user.username;
-            console.log(myUsername);
+            // Récupère mon username pour l'afficher
+            document.getElementById("monUsername").textContent = document.getElementById("monUsername").textContent+myUser.user.username;
+            document.getElementById("monNom").textContent = document.getElementById("monNom").textContent+myUser.user.nom;
+            document.getElementById("monPrenom").textContent = document.getElementById("monPrenom").textContent+myUser.user.prenom;
+            document.getElementById("maVilleFav").textContent = document.getElementById("maVilleFav").textContent+myUser.user.ville_fav;
+            document.getElementById("monTel").textContent = document.getElementById("monTel").textContent+myUser.user.tel;
+            document.getElementById("maDateDeNaissance").textContent = document.getElementById("maDateDeNaissance").textContent+myUser.user.dateNaissance;
             // Récupère mon élément
-            document.getElementById("monUsername").textContent = myUsername;
 
         };
-        recupUsername();
+        recupUserInfo();
 
-        // RECUPERER LA TERAM SI IL Y A
+        // RECUPERER LA TEAM SI IL Y A
         async function recupTeam(){
             let repUser = await fetch("/api/utilisateur/"+monId, {
                 method: "GET",
@@ -33,24 +38,99 @@
             // Récupère mon id de Team
             var myIdTeam = myUser.user.team;
 
-            let repTeam = await fetch("/api/team/"+myIdTeam, {
-                method: "GET",
-                headers: {'Content-Type': 'application/json'}
-            });
-            // Récupère mon user
-            let myTeamInfo =  await repTeam.json()
+            if(myIdTeam!= null){
+                // Récupère mon élément et ajoute si une team ses caractéristique
+                let repTeam = await fetch("/api/team/"+myIdTeam, {
+                    method: "GET",
+                    headers: {'Content-Type': 'application/json'}
+                });
+                // Récupère mon user
+                let myTeamInfo =  await repTeam.json()
 
-            console.log(myTeamInfo);
-            if(myTeamInfo != null){
-            // Récupère mon élément et ajoute si une team ses caractéristique
-            document.getElementById("entrainements").insertAdjacentHTML("afterend",
-                "<ul><li>"+myTeamInfo.team.nomTeam+"</li><li>"+myTeamInfo.team.Description+"</li><li>"+myTeamInfo.team.dateCreation+"</li></ul>");
+                document.getElementById("maTeamAMoi").insertAdjacentHTML("afterend",
+                    "<ul><li>"+myTeamInfo.team.nomTeam+"</li><li>"+myTeamInfo.team.Description+"</li><li>"+myTeamInfo.team.dateCreation+"</li></ul>");
             }else {
-                document.getElementById("entrainements").insertAdjacentHTML("afterend",
+                document.getElementById("maTeamAMoi").insertAdjacentHTML("afterend",
                 "<p>Tu n'as pas encore de Team !</p>");
             }
         };
         recupTeam();
+
+        window.onload=function(){
+            // bouttons MODIFIER USER
+            const dialogModif = document.getElementById('dialogModif');
+            const openBtnModif= document.getElementById('openBtnModif');
+            const closeBtnModif = document.getElementById('closeBtnModif');
+            const btnModifierUser = document.getElementById('modifierUser');
+
+            openBtnModif.addEventListener('click', function() {
+                dialogModif.setAttribute('open', true);
+                console.log("dialog ouvert");
+            })
+
+            closeBtnModif.addEventListener('click', function() {
+                dialogModif.removeAttribute('open');
+                console.log("dialog fermé");
+            });
+
+            btnModifierUser.addEventListener('click', function() {
+                updateUser();
+                dialogModif.removeAttribute('open');
+                recupUserInfo();
+                console.log("dialog fermé");
+            });
+
+            // bouttons SUPPRIMER USER
+            const dialogSup = document.getElementById('dialogSup');
+            const openBtnSup = document.getElementById('openBtnSup');
+            const closeBtnSup = document.getElementById('closeBtnSup');
+            const btnSupprimerUser = document.getElementById('supprimerUser');
+
+            openBtnSup.addEventListener('click', function() {
+                dialogSup.setAttribute('open', true);
+                console.log("dialog ouvert");
+            })
+
+            closeBtnSup.addEventListener('click', function() {
+                dialogSup.removeAttribute('open');
+                console.log("dialog fermé");
+            });
+
+            btnSupprimerUser.addEventListener('click', deleteUser);
+        }
+
+        // MODIFIER USER 
+
+        async function updateUser(){
+            let data = {username: (document.getElementById("username").value ? "" : document.getElementById("username").value),
+                nom: (document.getElementById("nom").value ? "" : document.getElementById("nom").value),
+                prenom: (document.getElementById("prenom").value ? document.getElementById("prenom").value : ""),
+                ville_fav: (document.getElementById("ville_fav").value ? document.getElementById("ville_fav").value : ""),
+                tel: (document.getElementById("tel").value ? document.getElementById("tel").value : ""),
+                dateNaissance: (document.getElementById("dateNaissance").value ? document.getElementById("dateNaissance").value : ""),
+                mdp: document.getElementById("mdp").value
+            }
+            let repUser = await fetch("/api/utilisateur/"+monId, {
+                method: "PUT",
+                headers: {'Content-Type': 'application/json'}, 
+                body: JSON.stringify(data)
+            });
+            
+            console.log("update");
+            window.location.href="/home.html";
+        };
+        
+        // FONCTION SUPPRIMER
+        async function deleteUser(){
+            let repUser = await fetch("/api/utilisateur/"+monId, {
+                method: "DELETE",
+                headers: {'Content-Type': 'application/json'}
+            });
+            
+            sessionStorage.setItem("_id", "");
+            window.location.href="/index.html";
+        };
+
     </script>
 </head>
 
@@ -65,20 +145,64 @@
       </footer>
     </div> 
 
+    <!-- PROFIL -->
     <div id="profil">
         <h1>Mon profil</h1>
-        <h1 id="monUsername"></h1>
+        <p id="monUsername">Nom d'utilisateur : </p>
+        <p id="monNom">Nom : </p>
+        <p id="monPrenom">Prénom : </p>
+        <p id="maVilleFav">La ville où je préfère pratiquer : </p>
+        <p id="monTel">Téléphone : </p>
+        <p id="maDateDeNaissance">Date de naissance : </p>
+
+        <!-- MODIFIER MON COMPTE -->
+        <button id="openBtnModif">Modifier mon profil</button>
+        <dialog id="dialogModif">
+            <button id="closeBtnModif">Annuler</button>
+            <!-- Champs de mofication-->
+            <h2>Modifier vos données</h2>
+            <label for="username">Nom d'utilisateur :</label>
+            <input type="text" name="username" id="username" />
+            <br/>
+            <label for="nom">Nom :</label>
+            <input type="text" name="nom" id="nom" />
+            <br/>
+            <label for="prenom">Prénom :</label>
+            <input type="text" name="prenom" id="prenom" />
+            <br/>
+            <label for="ville_fav">Ville favorite :</label>
+            <input type="text" name="ville_fav" id="ville_fav" />
+            <br/>
+            <label for="tel">Téléphone :</label>
+            <input type="tel" name="tel" id="tel" />
+            <br/>
+            <label for="dateNaissance">Votre date de naissance :</label>
+            <input type="date" name="dateNaissance" id="dateNaissance" />
+            <br/>
+            <label for="mdp">Votre mot de passe :</label>
+            <label class="obligation" >*obligatoire</label>
+            <input type="password" name="mdp" id="mdp" />
+            <br/>
+            <button id="modifierUser">Modifier</button>
+        </dialog>
+
+        <!-- SUPPRIMER MON COMPTE -->
+        <button id="openBtnSup">Supprimer mon compte</button>
+        <dialog id="dialogSup">
+            <button id="closeBtnSup">Annuler</button>
+            <button id="supprimerUser">Supprimer défninitivement</button>
+        </dialog>
     </div>
 
-    <a href="/entrainement.html" id="entrainements">Entrainement</a>
+    <!-- ENTRAINEMENT -->
+    <div id="divEntrainements">
+        <h1>Mes entrainements</h1>
+        <a href="/entrainement.html" id="entrainements">S'entrainer !</a>
+    </div>
+    <!-- TEAM -->
     <div id="team">
-        <h1>Ma Team</h1>
-        <ul>
-            <li id="nomTeam"></li>
-            <li id="descriptionTeam"></li>
-            <li id="dateCreationTeam"></li>
-        </ul>
-        
+        <h1 id="maTeamAMoi">Ma Team</h1>
+        <!--<button id="ajouterTeam">Ajouter une team</button>-->
     </div>
 
     <!-- FOOTER -->
@@ -92,4 +216,38 @@
       </footer>
     </div> 
 </body>
+<style>
+    #openBtnSup, #closeBtnSup {
+        border: none;
+        background-color: hsl(0, 0%, 20%);
+        color: #fff;
+        border-radius: 3px;
+        width: 200px;
+        height: 40px;
+        font-size: 1rem;
+        font-family: sans-serif;
+        cursor: pointer;
+    }
+
+    #closeBtnSup {
+        width: 80px;
+        height: 30px;
+        font-size: 0.9rem;
+        margin-bottom: 30px;
+    }
+
+    #openBtnSup:hover, #openBtnSup:focus,
+    #closeBtn:hover, #closeBtnSup:focus{
+        background-color: hsl(0, 56%, 30%);
+    }
+
+    #dialogSup {
+        width: 20%;
+        height: 20%;
+        position: absolute;
+        top: 60%;
+        font-family: sans-serif;
+        color: #555;
+    }
+</style>
 </html>

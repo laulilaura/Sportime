@@ -48,14 +48,17 @@
 <!--Js -->
     <script>
       async function inscription(){
+        
         let data = {username: document.getElementById("username").value,
-                  nom: document.getElementById("nom").value,
-                  prenom: document.getElementById("prenom").value,
-                  ville_fav: document.getElementById("ville_fav").value,
-                  tel: document.getElementById("tel").value,
-                  dateNaissance: document.getElementById("dateNaissance").value,
-                  mdp: document.getElementById("mdp").value
-                  }
+          nom: document.getElementById("nom").value,
+          prenom: document.getElementById("prenom").value,
+          ville_fav: document.getElementById("ville_fav").value,
+          tel: document.getElementById("tel").value,
+          dateNaissance: document.getElementById("dateNaissance").value,
+          mdp: document.getElementById("mdp").value,
+          team: null,
+          estAdmin: false
+          }
         let repUserCreate = await fetch("/api/utilisateur", {
         method: "POST",
         headers: {'Content-Type': 'application/json'}, 
