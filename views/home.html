@@ -6,7 +6,7 @@
     <script >
         // Get Storage
         let monId = sessionStorage.getItem("_id");
-
+        console.log(monId)
         // RECUPERER LE USERNAME
         async function recupUserInfo(){
             let repUser = await fetch("/api/utilisateur/"+monId, {
@@ -129,7 +129,7 @@
                 ajouterTeam.style.display = "block";
                 validerTeam.style.display = "none";
                 annulerTeam.style.display = "none";
-                console.log("ajout team validé");
+                console.log("ajout team annulé");
             });
         }
 
