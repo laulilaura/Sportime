@@ -11,7 +11,7 @@ const routeTeam = require('./router/teamRouter');
 const routeSport = require('./router/sportRouter');
 const routeSpot = require('./router/spotRouter');
 const routePratique = require('./router/pratiqueRouter');
-const routePresent = require('./router/EstPresentRouter');
+const routePresent = require('./router/estpresentRouter');
 
 // body-parser
 app.use(bodyParser.urlencoded ({ extended: true }));
