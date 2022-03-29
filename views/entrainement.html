@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>S'entrainer - Sportime</title>
+</head>
+
+<body>
+      
+<!-- BODY -->
+<div id="entrainer">
+  <form action="javascript:entrainement()">
+    <p>Je vais m'entrainer ...</p>
+    <br/>
+    <label for="quand">Quand ?</label>
+    <input type="date" name="date" id="date" placeholder="Date"/>
+    <!-- A CHANGER -->
+    <input type="time" name="heure" id="heure" placeholder="heure"/>
+    <br/>
+    <label for="ou">Où ?</label>
+    <input type="text" name="ville" id="ville" placeholder="Ville"/>
+    <input type="text" name="spot" id="spot" placeholder="Spot"/>
+    <br/>
+    <label for="pratique">Pour pratiquer :</label>
+    <input type="text" name="pratique" id="pratique" placeholder="Skate/Parkour/..."/>
+    <br/>
+    <label for="nbPersonne">J'y vais </label>
+    <select name="nbPersonne" id="nbPersonne">
+        <option value="1">Seul</option>
+        <option value="2">à deux</option>
+        <option value="3">à trois</option>
+        <option value="4">à quatre</option>
+        <option value="5">à cinq</option>
+        <option value="6">à six</option>
+        <option value="7">à 7 ou plus</option>
+    </select>
+    <br/>
+    <input type="submit" value="J'y vais !">
+  </form>
+</div>
+  
+<!-- FOOTER -->
+      <footer class="footer">
+        <ul>
+          <li><a href="#aPropos">À propos</a></li>
+          <li><a href="#politique">Politique de confidentialité</a></li>
+          <li><a href="#session">Session</a></li>
+          <li><a href="#reseaux">Réseaux sociaux</a></li>
+        </ul>
+      </footer>
+    </div> 
+
+<!--Js -->
+    <script>
+      async function blabla(){
+        let data = {username: document.getElementById("username").value,
+                  nom: document.getElementById("nom").value,
+                  prenom: document.getElementById("prenom").value,
+                  ville_fav: document.getElementById("ville_fav").value,
+                  tel: document.getElementById("tel").value,
+                  dateNaissance: document.getElementById("dateNaissance").value,
+                  mdp: document.getElementById("mdp").value
+                  }
+        let repUserCreate = await fetch("/api/utilisateur", {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'}, 
+        body: JSON.stringify(data)
+      });
+      let myUser =  await repUserCreate.json()
+      let monIdDUSER = myUser.userId;
+      sessionStorage.setItem("_id", monIdDUSER);
+      window.location.href="/home.html"
+      };
+    </script>
+    
+  </body>
+</html>

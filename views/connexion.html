@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion - Sportime</title>
+</head>
+
+<body>
+<!-- BODY -->
+<div id="connexion">
+  <form action="javascript:connexion()">
+    <label for="username">Votre nom d'utilisateur :</label>
+    <input type="text" name="username" id="username" required="required"/>
+    <br/>
+    <label for="mdp">Votre mot de passe :</label>
+    <input type="password" name="mdp" id="mdp" required="required"/>
+    <br/>
+    <input type="submit" value="Connexion">
+  </form>
+</div>
+  
+<!-- FOOTER -->
+    <footer class="footer">
+      <ul>
+        <li><a href="#aPropos">À propos</a></li>
+        <li><a href="#politique">Politique de confidentialité</a></li>
+        <li><a href="#session">Session</a></li>
+        <li><a href="#reseaux">Réseaux sociaux</a></li>
+      </ul>
+    </footer>
+  </div> 
+
+<!--Js -->
+    <script>
+        console.log(document.getElementById("username").value);
+        console.log(document.getElementById("mdp").value);
+
+        async function connexion(){
+          let data = {username: document.getElementById("username").value,
+                  mdp: document.getElementById("mdp").value
+                  }
+          let repUserLogin = await fetch("/api/utilisateur/login", {
+              method: "POST",
+              headers: {'Content-Type': 'application/json'}, 
+              body: JSON.stringify(data)
+          });
+          if(repUserLogin.ok){
+            let myUser =  await repUserLogin.json()
+            localStorage.setItem("id", myUser._id);
+            localStorage.setItem("token", myUser.token);
+            window.location.href="/home.html"
+          } else{
+            alert('Identifiant ou mot de passe incorecte');
+          }          
+        };
+    </script>
+    
+  </body>
+</html>
