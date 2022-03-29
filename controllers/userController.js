@@ -2,7 +2,8 @@ const User = require('../models/userModel');
 const bcrypt = require('bcrypt');
 const jwtUtils = require('../utils/jwt.utils');
 const TEL_REGEX = /^(\+33|0)[1-9](\d\d){4}$/;
-const MDP_REGEX = /^([ a-zA-Z0-9@ *#]{7,15})$/;
+const MDP_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
+	
 
 
 //////////////////////////////////// CREATE
@@ -13,6 +14,7 @@ exports.createUser = (req, res) => {
     const prenom = req.body.prenom;
     const username = req.body.username;
     const tel = req.body.tel;
+    const villeFave = req.body.ville_fav.toLowerCase();
 
     if (nom == null || mdp == null || prenom == null || username == null || tel == null) {
         return res.status(400).json({ 'error': 'missing parameters' });
@@ -22,7 +24,7 @@ exports.createUser = (req, res) => {
         return res.status(400).json({ 'erreur': 'téléphone non valide, il doit commencer par un 0 ou +33 et doit comporter 9 autres numéros' });
     };
     if (!MDP_REGEX.test(mdp)) {
-        return res.status(400).json ({ 'erreur': 'mot de passe non valide Le mot de passe doit comporter au moins 7 caractères et pas plus de 15 caractères.'});
+        return res.status(400).json ({ 'erreur': 'mot de passe non valide. Le mot de passe doit comporter entre 8 et 20 charactères dont au moins une lettre minuscule, une majuscule et un chiffre.'});
     };
 
     User.findOne({username: username})
@@ -34,7 +36,7 @@ exports.createUser = (req, res) => {
                         estAdmin: false,
                         nom: nom,
                         prenom: prenom,
-                        ville_fav: req.body.ville_fav,
+                        ville_fav: villeFave,
                         tel: tel,
                         dateNaissance: req.body.dateNaissance,
                         mdp: bcryptedPassword,
@@ -42,7 +44,10 @@ exports.createUser = (req, res) => {
                     })
                     .then((newUser) => {
                         console.log(newUser);
-                        return res.status(201).json({'userId': newUser.id});
+                        return res.status (200).json({
+                            'userId': newUser._id,
+                            'token': jwtUtils.generateTokenForUser(newUser)
+                        });
                     })
                     .catch((err) => {
                         return res.status(400).json({err});
@@ -86,12 +91,17 @@ exports.loginUser = (req, res) => {
             return res.status(404).json({ 'erreur': 'utilisateur inexistant'});
         }
     })
-    .catch((err) => { return res.status(500).json( {'erreur': 'incapable de vérifier l\'utilisateur'} )});
+    .catch((err) => { return res.status(500).json( {err} )});
 };
 
 //////////////////////////////////// GET
 
 exports.getAllUsers = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    if (userId < 0) {
+        return res.status(401).json({ 'error': 'Bad token'});
+    }
 
     User.find()
     .then((users) => { return res.status(200).json({users})})
@@ -99,6 +109,12 @@ exports.getAllUsers = (req, res) => {
 };
 
 exports.getOneUserById = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
+
     const idUser = req.params.id;
 
     User.findOne({_id: idUser})
@@ -107,6 +123,12 @@ exports.getOneUserById = (req, res) => {
 };
 
 exports.getOneUserByUsername = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
+
     const username = req.params.username;
 
     User.findOne({username: username})
@@ -115,6 +137,12 @@ exports.getOneUserByUsername = (req, res) => {
 };
 
 exports.getUsersByTeam = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
+
     const idTeam = req.params.idTeam;
 
     User.find({team: idTeam})
@@ -123,6 +151,12 @@ exports.getUsersByTeam = (req, res) => {
 };
 
 exports.getUsersByVilleFav = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
+
     const ville_favorite = req.params.ville_fav;
 
     User.find({ville_fav: ville_favorite})
@@ -133,6 +167,12 @@ exports.getUsersByVilleFav = (req, res) => {
 //////////////////////////////////// PUT
 
 exports.putUser = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
+
     const id = req.params.id;
     const mdp = req.body.mdp;
 
@@ -141,7 +181,7 @@ exports.putUser = (req, res) => {
     }
 
     if (!MDP_REGEX.test(mdp)) {
-        return res.status(400).json ({ 'erreur': 'mot de passe non valide Le mot de passe doit comporter au moins 7 caractères et pas plus de 15 caractères.'});
+        return res.status(400).json ({ 'erreur': 'mot de passe non valide. Le mot de passe doit comporter entre 8 et 20 charactères dont au moins une lettre minuscule, une majuscule et un chiffre.'});
     };
 
     User.findOne({_id: id})
@@ -151,7 +191,7 @@ exports.putUser = (req, res) => {
             user.username = (req.body.username ? req.body.username : user.username),
             user.prenom = (req.body.prenom ? req.body.prenom : user.prenom),
             user.nom = (req.body.nom ? req.body.nom : user.nom),
-            user.ville_fav = (req.body.ville_fav ? req.body.ville_fav : user.ville_fav),
+            user.ville_fav = (req.body.ville_fav ? req.body.ville_fav.toLowerCase() : user.ville_fav),
             user.tel = (req.body.tel ? req.body.tel : user.tel),
             user.dateNaissance = (req.body.dateNaissance ? req.body.dateNaissance : user.dateNaissance),
             user.team = (req.body.team ? req.body.team : user.team),
@@ -171,25 +211,19 @@ exports.putUser = (req, res) => {
 //////////////////////////////////// DELETE
 
 exports.delUser = (req, res) => {
+    
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    if (userId < 0) {
+        return res.status(401).json({ 'error': 'Bad token'});
+    }
+
     const id = req.params.id;
 
     User.deleteOne({_id: id})
     .then((user) => { return res.status(200).json( {user} )})
     .catch((error) => { return res.status(400).json( {error} )});
 };
-
-
-/*{
-    username: req.body.username,
-    estAdmin: false,
-    nom: req.body.nom,
-    prenom: req.body.prenom,
-    ville_fav: req.body.ville_fav,
-    tel: req.body.tel,
-    dateNaissance: req.body.dateNaissance,
-    mdp: req.body.mdp
-}*/
-
 
 
 /*

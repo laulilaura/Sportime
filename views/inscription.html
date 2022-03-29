@@ -10,25 +10,25 @@
 <div id="inscription">
   <form action="javascript:inscription()">
     <label for="username">Votre nom d'utilisateur :</label>
-    <input type="text" name="username" id="username" />
+    <input type="text" name="username" id="username" required="required"/>
     <br/>
     <label for="nom">Votre nom :</label>
-    <input type="text" name="nom" id="nom" />
+    <input type="text" name="nom" id="nom" required="required"/>
     <br/>
     <label for="prenom">Votre prenom :</label>
-    <input type="text" name="prenom" id="prenom" />
+    <input type="text" name="prenom" id="prenom" required="required"/>
     <br/>
     <label for="ville_fav">Votre ville favorite :</label>
-    <input type="text" name="ville_fav" id="ville_fav" />
+    <input type="text" name="ville_fav" id="ville_fav" required="required"/>
     <br/>
     <label for="tel">Votre téléphone :</label>
-    <input type="tel" name="tel" id="tel" />
+    <input type="tel" name="tel" id="tel" pattern="^(\+33|0)[1-9](\d\d){4}$" title="Téléphone non valide, il doit commencer par un 0 ou +33 et doit comporter 9 autres numéros" required="required"/>
     <br/>
     <label for="dateNaissance">Votre date de naissance :</label>
-    <input type="date" name="dateNaissance" id="dateNaissance" />
+    <input type="date" name="dateNaissance" id="dateNaissance" required="required"/>
     <br/>
     <label for="mdp">Votre mot de passe :</label>
-    <input type="password" name="mdp" id="mdp" />
+    <input type="password" name="mdp" id="mdp" required="required"/>
     <br/>
     <input type="submit" value="Inscription !">
   </form>
@@ -64,9 +64,9 @@
         headers: {'Content-Type': 'application/json'}, 
         body: JSON.stringify(data)
       });
-      let myUser =  await repUserCreate.json()
-      let monIdDUSER = myUser.userId;
-      sessionStorage.setItem("_id", monIdDUSER);
+      let myUser =  await repUserCreate.json();
+      localStorage.setItem("id", myUser.userId);
+      localStorage.setItem("token", myUser.token);
       window.location.href="/home.html";
       };
     </script>

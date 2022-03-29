@@ -10,10 +10,10 @@
 <div id="connexion">
   <form action="javascript:connexion()">
     <label for="username">Votre nom d'utilisateur :</label>
-    <input type="text" name="username" id="username" />
+    <input type="text" name="username" id="username" required="required"/>
     <br/>
     <label for="mdp">Votre mot de passe :</label>
-    <input type="password" name="mdp" id="mdp" />
+    <input type="password" name="mdp" id="mdp" required="required"/>
     <br/>
     <input type="submit" value="Connexion">
   </form>
@@ -44,10 +44,14 @@
               headers: {'Content-Type': 'application/json'}, 
               body: JSON.stringify(data)
           });
-          let myUser =  await repUserLogin.json()
-          let monIdDUSER = myUser._id;
-          sessionStorage.setItem("_id", monIdDUSER);
-          window.location.href="/home.html"
+          if(repUserLogin.ok){
+            let myUser =  await repUserLogin.json()
+            localStorage.setItem("id", myUser._id);
+            localStorage.setItem("token", myUser.token);
+            window.location.href="/home.html"
+          } else{
+            alert('Identifiant ou mot de passe incorecte');
+          }          
         };
     </script>
     
