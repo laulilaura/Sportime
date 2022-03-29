@@ -21,7 +21,7 @@ mongoose.connect('mongodb+srv://admin:Pol060592873ca@sportimeapi.eybb5.mongodb.n
 {
     useNewUrlParser: true, useUnifiedTopology: true
 }).then(() => {
-    console.log("Connexion success !")
+    console.log("Connexion mongoose success !")
 }).catch((error) => {
     console.log(error);
 });

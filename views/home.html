@@ -252,7 +252,7 @@
                 <br/>
                 <label for="mdp">Votre mot de passe :</label>
                 <label class="obligation" >*obligatoire</label>
-                <input type="password" name="mdp" id="mdp" required="required"/>
+                <input type="password" name="mdp" id="mdp" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$" title="Mot de passe non valide, il doit comporter au moins une minuscule, une majuscule, un chiffre et entre 8 et 20 charactères." required="required"/>
                 <br/>
                 <button id="modifierUser">Modifier</button>
             </form>
