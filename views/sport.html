@@ -86,6 +86,7 @@
 
                     // put the <tbody> in the <table>
                     tbl.appendChild(tblBody);
+                    tbl.setAttribute("border", "1");
                     // appends <table> into <body>
                     body.appendChild(tbl);
 
@@ -106,41 +107,42 @@
             if (repAllSport.ok){
                 // Récupère mes sports
                 let allSport =  await repAllSport.json()
-                let nbSport = allSport.sport.length;
-                    
-                var body = document.getElementById("tabAllSports");
+                let nbSport = allSport.sports.length;
+
+                var bodyAll = document.getElementById("tabAllSports");
                 // Création d'un <table> element et d'un <tbody> element
-                var tblAll = document.createElement("tableAll");
-                var tblBodyAll = document.createElement("tbodyAll");
+                var tblAll = document.createElement("table");
+                var tblBodyAll = document.createElement("tbody");
 
                 // création de ligne
                 for (var i = 0; i < nbSport; i++) {
                     // creation d'une ligne du tableau
-                    var row = document.createElement("tr");
+                    var rowAll = document.createElement("tr");
 
                     // création des colones
-                    var idSport = document.createElement("td");
-                    var niveau = document.createElement("td");
-                    var avis = document.createElement("td");
+                    var nomSportAll = document.createElement("td");
+                    var categorieAll = document.createElement("td");
+                    var descriptionAll = document.createElement("td");
 
-                    var cellSportAll = document.createTextNode(myPratiques.pratique[i].idSport);
-                    var cellNiveauAll = document.createTextNode(myPratiques.pratique[i].niveau);
-                    var cellAvisAll = document.createTextNode(myPratiques.pratique[i].avis);
+                    var cellnomSportAll = document.createTextNode(allSport.sports[i].nomSport);
+                    var cellcategorieAll = document.createTextNode(allSport.sports[i].categorie);
+                    var celldescriptionAll = document.createTextNode(allSport.sports[i].description);
 
-                    idSportAll.appendChild(cellSportAll);
-                    niveauAll.appendChild(cellNiveauAll);
-                    avisAll.appendChild(cellAvisAll);
+                    nomSportAll.appendChild(cellnomSportAll);
+                    categorieAll.appendChild(cellcategorieAll);
+                    descriptionAll.appendChild(celldescriptionAll);
 
-                    row.appendChild(idSportAll);
-                    row.appendChild(niveauAll);
-                    row.appendChild(avisAll);
+                    rowAll.appendChild(nomSportAll);
+                    rowAll.appendChild(categorieAll);
+                    rowAll.appendChild(descriptionAll);
 
                     // ajout de la ligne au tableau
-                    tblBodyAll.appendChild(row);
+                    tblBodyAll.appendChild(rowAll);
                 }
 
                 // put the <tbody> in the <table>
                 tblAll.appendChild(tblBodyAll);
+                tblAll.setAttribute("border", "1");
                 // appends <table> into <body>
                 bodyAll.appendChild(tblAll);
             }
