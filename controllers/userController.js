@@ -97,13 +97,11 @@ exports.loginUser = (req, res) => {
 //////////////////////////////////// GET
 
 exports.getAllUsers = (req, res) => {
-    /*
     const headerAuth = req.headers['authorization'];
     const userId = jwtUtils.getId(headerAuth);
     if (userId < 0) {
         return res.status(401).json({ 'error': 'Bad token'});
-    }*/
-
+    }
     User.find()
     .then((users) => { return res.status(200).json({users})})
     .catch((error) => { return res.status(400).json({error})});
@@ -205,6 +203,35 @@ exports.putUser = (req, res) => {
                 return res.status(400).json ( {error} );
             });
         });
+    })
+    .catch((error) => { return res.status(400).json( {error} )});
+};
+
+
+exports.putUserTeam = (req, res) => {
+    /*const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }*/
+    const id = req.params.id;
+
+    User.findOne({_id: id})
+    .then ((user) => {
+        console.log("findUser");
+        user.username = user.username,
+        user.nom = user.nom,
+        user.prenom = user.prenom,
+        user.ville_fav = user.ville_fav,
+        user.tel = user.tel,
+        user.dateNaissance = user.dateNaissance,
+        user.team = req.body.team,
+        user.mdp = user.mdp
+        user.save()
+        .then((user) => {
+            return res.status(200).json({user});
+        })
+        .catch((error) => { return res.status(401).json( {error} )});
     })
     .catch((error) => { return res.status(400).json( {error} )});
 };

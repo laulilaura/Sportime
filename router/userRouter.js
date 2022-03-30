@@ -12,6 +12,7 @@ router.get('/usersByTeam/:idTeam', UserCtrl.getUsersByTeam);
 router.get('/villeFav/:ville_fav', UserCtrl.getUsersByVilleFav);
 
 router.put('/:id', UserCtrl.putUser);
+router.put('/team/:id', UserCtrl.putUserTeam);
 
 router.delete('/:id', UserCtrl.delUser);
 

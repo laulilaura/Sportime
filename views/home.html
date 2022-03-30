@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Home page</title>
+    <link rel="icon" href="img/logo.ico">
     <script >
         // Get Storage
         let monId = localStorage.getItem("id");
@@ -77,12 +78,13 @@
                 validerTeam.addEventListener('click', function() {
                     divAjoutTeam.style.display = "none";
                     TeamsExistantes.style.display = "none";
-                    ajouterTeam.style.display = "block";
+                    ajouterTeam.style.display = "none";
                     validerTeam.style.display = "none";
                     annulerTeam.style.display = "none";
                     addTeam();
                     console.log("ajout team validé");
                 });
+
                 annulerTeam.addEventListener('click', function() {
                     divAjoutTeam.style.display = "block";
                     TeamsExistantes.style.display = "none";
@@ -147,7 +149,22 @@
                 let myTeamInfo =  await repTeam.json()
 
                 document.getElementById("maTeamAMoi").insertAdjacentHTML("afterend",
-                    "<ul><li>"+myTeamInfo.team.nomTeam+"</li><li>"+myTeamInfo.team.Description+"</li><li>"+myTeamInfo.team.dateCreation+"</li></ul>");
+                    "<ul id=\"maTeamUl\"><li>"+myTeamInfo.team.nomTeam+"</li><li>"+myTeamInfo.team.Description+"</li><li>"+myTeamInfo.team.dateCreation+"</li></ul>");
+                document.getElementById("maTeamUl").insertAdjacentHTML("afterend",
+                    "<button id=\"suppTeam\">Supprimer ma team</button>");
+                document.getElementById("ajouterTeam").display = "none";
+
+                
+                const supprimerTeam = document.getElementById("suppTeam");
+                supprimerTeam.addEventListener('click', function() {
+                    divAjoutTeam.style.display = "block";
+                    TeamsExistantes.style.display = "block";
+                    ajouterTeam.style.display = "block";
+                    validerTeam.style.display = "none";
+                    annulerTeam.style.display = "none";
+                    suppTeam();
+                });
+                // SUPPRIMER BOUTON AJOUT
             } else {
                 document.getElementById("maTeamAMoi").insertAdjacentHTML("afterend",
                 "<p>Tu n'as pas encore de Team !</p>");
@@ -182,10 +199,8 @@
         // AJOUT TEAM
         async function addTeam(){
             let teamRecup = document.getElementById("team-select").value;
-            console.log(teamRecup);
             let data = {team: teamRecup};
-            console.log("data"+data);
-            let repUser = await fetch("/api/utilisateur/"+monId, {
+            let repUser = await fetch("/api/utilisateur/team/"+monId, {
                 method: "PUT",
                 headers: {
                     'content-type': 'application/json',
@@ -196,16 +211,35 @@
             if (repUser.ok) {
                 console.log("ajout team");
                 window.location.href="/home.html";
-            }else {
-                alert("Un problème est survenu")
+            } else {
+                alert("Un problème est survenu lors de l'ajout")
+            }
+        };
+
+        // SUPPRIMER TEAM
+        async function suppTeam(){
+            let data = {team: null};
+            let repUser = await fetch("/api/utilisateur/team/"+monId, {
+                method: "PUT",
+                headers: {
+                    'content-type': 'application/json',
+                    'authorization': localStorage.getItem('token'),
+                },
+                body: JSON.stringify(data)
+            });
+            if (repUser.ok) {
+                console.log("supp team");
+                window.location.href="/home.html";
+            } else {
+                alert("Un problème est survenu lors de la suppression")
             }
         };
 
         // MODIFIER USER 
 
         async function updateUser(){
-            let data = {username: (document.getElementById("username").value ? "" : document.getElementById("username").value),
-                nom: (document.getElementById("nom").value ? "" : document.getElementById("nom").value),
+            let data = {username: (document.getElementById("username").value ? document.getElementById("username").value : ""),
+                nom: (document.getElementById("nom").value ? document.getElementById("nom").value : "" ),
                 prenom: (document.getElementById("prenom").value ? document.getElementById("prenom").value : ""),
                 ville_fav: (document.getElementById("ville_fav").value ? document.getElementById("ville_fav").value : ""),
                 tel: (document.getElementById("tel").value ? document.getElementById("tel").value : ""),
