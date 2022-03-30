@@ -15,13 +15,11 @@
             localStorage.removeItem("id");
             localStorage.removeItem("token");
             localStorage.clear();
-            console.log(localStorage);
             window.location.href="/index.html";
         };
 
         //////////////////////////// RECUPERER LE OU LES SPORTS SI IL Y EN A
         async function recupSport(){
-            console.log(monId);
             let repPratique = await fetch("/api/pratique/userId/"+monId, {
                 method: "GET",
                 headers: {
@@ -41,11 +39,6 @@
                     } else {
                         document.getElementById("mesSportsH1").innerHTML  = "Tes sports";
                     }
-                    // RECUPERER NOM DU SPORT A PARTIR D'UN FETCH SUR L'ID
-                    let repNomSport = await fetch("/api/sport/"+myIdTeam, {
-                        method: "GET",
-                        headers: {'Content-Type': 'application/json'}
-                    });
                     
                     var body = document.getElementById("tabSports");
                     // Création d'un <table> element et d'un <tbody> element
@@ -62,7 +55,20 @@
                         var niveau = document.createElement("td");
                         var avis = document.createElement("td");
 
-                        var cellSport = document.createTextNode(myPratiques.pratique[i].idSport);
+                        // RECUPERER NOM DU SPORT A PARTIR D'UN FETCH SUR L'ID
+                        let repNomSport = await fetch("/api/sport/"+myPratiques.pratique[i].idSport, {
+                            method: "GET",
+                            headers: {
+                                'content-type': 'application/json',
+                                'authorization': localStorage.getItem('token'),
+                            }
+                        });
+                        if(repNomSport.ok){
+                            let mySport =  await repNomSport.json()
+                            var cellSport = document.createTextNode(mySport.sport.nomSport);
+                        }else {
+                            var cellSport = document.createTextNode(myPratiques.pratique[i].idSport);
+                        }
                         var cellNiveau = document.createTextNode(myPratiques.pratique[i].niveau);
                         var cellAvis = document.createTextNode(myPratiques.pratique[i].avis);
 
@@ -88,6 +94,59 @@
         };
         recupSport();
 
+        //////////////////////////// RECUPERER LE OU LES SPORTS SI IL Y EN A
+        async function recupAllSport(){
+            let repAllSport = await fetch("/api/sport/", {
+                method: "GET",
+                headers: {
+                    'content-type': 'application/json',
+                    'authorization': localStorage.getItem('token'),
+                }
+            });
+            if (repAllSport.ok){
+                // Récupère mes sports
+                let allSport =  await repAllSport.json()
+                let nbSport = allSport.sport.length;
+                    
+                var body = document.getElementById("tabAllSports");
+                // Création d'un <table> element et d'un <tbody> element
+                var tblAll = document.createElement("tableAll");
+                var tblBodyAll = document.createElement("tbodyAll");
+
+                // création de ligne
+                for (var i = 0; i < nbSport; i++) {
+                    // creation d'une ligne du tableau
+                    var row = document.createElement("tr");
+
+                    // création des colones
+                    var idSport = document.createElement("td");
+                    var niveau = document.createElement("td");
+                    var avis = document.createElement("td");
+
+                    var cellSportAll = document.createTextNode(myPratiques.pratique[i].idSport);
+                    var cellNiveauAll = document.createTextNode(myPratiques.pratique[i].niveau);
+                    var cellAvisAll = document.createTextNode(myPratiques.pratique[i].avis);
+
+                    idSportAll.appendChild(cellSportAll);
+                    niveauAll.appendChild(cellNiveauAll);
+                    avisAll.appendChild(cellAvisAll);
+
+                    row.appendChild(idSportAll);
+                    row.appendChild(niveauAll);
+                    row.appendChild(avisAll);
+
+                    // ajout de la ligne au tableau
+                    tblBodyAll.appendChild(row);
+                }
+
+                // put the <tbody> in the <table>
+                tblAll.appendChild(tblBodyAll);
+                // appends <table> into <body>
+                bodyAll.appendChild(tblAll);
+            }
+            
+        }
+        recupAllSport();
     </script>
 </head>
 
@@ -108,10 +167,17 @@
         </ul>
       </footer>
     </div> 
+
     <!-- MES SPORTS -->
     <div id="mesSports">
         <h1 id="mesSportsH1"></h1>
         <div id="tabSports"></div>
+    </div>
+
+    <!-- TOUS LES SPORTS -->
+    <div id="lesSports">
+        <h1>Sport sur Sportime</h1>
+        <div id="tabAllSports"></div>
     </div>
 
     <!-- FOOTER -->
