@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sports - Sportime</title>
+    <link rel="icon" href="img/logo.ico">
+
+    <script>
+        //////////////////////////// Get Storage
+        let monId = localStorage.getItem("id");
+        let monToken = localStorage.getItem("token");
+
+        //////////////////////////// FONCTION DECONNEXION 
+        async function logoutUser(){            
+            localStorage.removeItem("id");
+            localStorage.removeItem("token");
+            localStorage.clear();
+            console.log(localStorage);
+            window.location.href="/index.html";
+        };
+
+        //////////////////////////// RECUPERER LE OU LES SPORTS SI IL Y EN A
+        async function recupSport(){
+            console.log(monId);
+            let repPratique = await fetch("/api/pratique/userId/"+monId, {
+                method: "GET",
+                headers: {
+                    'content-type': 'application/json',
+                    'authorization': localStorage.getItem('token'),
+                }
+            });
+            if (repPratique.ok){
+                // Récupère mes sports
+                let myPratiques =  await repPratique.json()
+                let nbSport = myPratiques.pratique.length;
+                if(nbSport == 0){
+                    document.getElementById("mesSportsH1").innerHTML  = "Tu n'as pas encore de sports ! Ajoutes en";
+                } else {
+                    if (nbSport == 1){
+                        document.getElementById("mesSportsH1").innerHTML  = "Ton sport";
+                    } else {
+                        document.getElementById("mesSportsH1").innerHTML  = "Tes sports";
+                    }
+                    // RECUPERER NOM DU SPORT A PARTIR D'UN FETCH SUR L'ID
+                    let repNomSport = await fetch("/api/sport/"+myIdTeam, {
+                        method: "GET",
+                        headers: {'Content-Type': 'application/json'}
+                    });
+                    
+                    var body = document.getElementById("tabSports");
+                    // Création d'un <table> element et d'un <tbody> element
+                    var tbl = document.createElement("table");
+                    var tblBody = document.createElement("tbody");
+
+                    // création de ligne
+                    for (var i = 0; i < nbSport; i++) {
+                        // creation d'une ligne du tableau
+                        var row = document.createElement("tr");
+
+                        // création des colones
+                        var idSport = document.createElement("td");
+                        var niveau = document.createElement("td");
+                        var avis = document.createElement("td");
+
+                        var cellSport = document.createTextNode(myPratiques.pratique[i].idSport);
+                        var cellNiveau = document.createTextNode(myPratiques.pratique[i].niveau);
+                        var cellAvis = document.createTextNode(myPratiques.pratique[i].avis);
+
+                        idSport.appendChild(cellSport);
+                        niveau.appendChild(cellNiveau);
+                        avis.appendChild(cellAvis);
+
+                        row.appendChild(idSport);
+                        row.appendChild(niveau);
+                        row.appendChild(avis);
+
+                        // ajout de la ligne au tableau
+                        tblBody.appendChild(row);
+                    }
+
+                    // put the <tbody> in the <table>
+                    tbl.appendChild(tblBody);
+                    // appends <table> into <body>
+                    body.appendChild(tbl);
+
+                }
+            }    
+        };
+        recupSport();
+
+    </script>
+</head>
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!-- BODY -->
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <ul>
+            <li><a href="/home.html">Acceuil</a></li>
+            <li><a href="/entrainement.html">Entrainements</a></li>
+            <li><a href="/sport.html">Sports</a></li>
+            </li>
+                <input id="Déconnexion" type="button" value="Déconnexion" onclick="logoutUser();"/>
+            </li>
+        </ul>
+      </footer>
+    </div> 
+    <!-- MES SPORTS -->
+    <div id="mesSports">
+        <h1 id="mesSportsH1"></h1>
+        <div id="tabSports"></div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <ul>
+          <li><a href="aPropos.html">À propos</a></li>
+          <li><a href="#politique">Politique de confidentialité</a></li>
+          <li><a href="#session">Session</a></li>
+          <li><a href="#reseaux">Réseaux sociaux</a></li>
+        </ul>
+    </footer>
+</body>
+</html>

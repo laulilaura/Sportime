@@ -11,6 +11,12 @@ exports.createPratique = (req, res) => {
 }
 
 exports.getAllPratique = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    if (userId < 0) {
+        return res.status(401).json({ 'error': 'Bad token'});
+    }
+
     Pratique.find()
     .then((pratiques) => { return res.status(200).json({pratiques})})
     .catch((error) => { return res.status(400).json({error})});
@@ -25,6 +31,11 @@ exports.getOnePratiqueById = (req, res) => {
 }
 
 exports.getPratiquesByUserid = (req, res) => {
+    /*const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    if (userId < 0) {
+        return res.status(401).json({ 'error': 'Bad token'});
+    }*/
     const idUser = req.params.userId;
 
     Pratique.find({idUser: idUser})

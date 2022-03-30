@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html lang="fr">
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!-- HEAD -->
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <head>
     <meta charset="UTF-8">
     <title>Home page</title>
     <link rel="icon" href="img/logo.ico">
     <script >
-        // Get Storage
+        //////////////////////////// Get Storage
         let monId = localStorage.getItem("id");
         let monToken = localStorage.getItem("token");
 
-        
+////////////////////////////////////////////////////  ONLOAD FONCTION  ////////////////////////////////////////////////////////
         window.onload=function(){
 
             // bouttons MODIFIER USER
             const dialogModif = document.getElementById('dialogModif');
-            const openBtnModif= document.getElementById('openBtnModif');
-            const closeBtnModif = document.getElementById('closeBtnModif');
-            const btnModifierUser = document.getElementById('modifierUser');
 
-            openBtnModif.addEventListener('click', function() {
+            document.getElementById('openBtnModif').addEventListener('click', function() {
                 dialogModif.setAttribute('open', true);
                 console.log("dialog ouvert");
             })
 
-            closeBtnModif.addEventListener('click', function() {
+            document.getElementById('closeBtnModif').addEventListener('click', function() {
                 dialogModif.removeAttribute('open');
                 console.log("dialog fermé");
             });
 
-            btnModifierUser.addEventListener('click', function() {
+            document.getElementById('modifierUser').addEventListener('click', function() {
                 updateUser();
                 dialogModif.removeAttribute('open');
                 recupUserInfo();
@@ -37,23 +37,20 @@
 
             // bouttons SUPPRIMER USER
             const dialogSup = document.getElementById('dialogSup');
-            const openBtnSup = document.getElementById('openBtnSup');
-            const closeBtnSup = document.getElementById('closeBtnSup');
-            const btnSupprimerUser = document.getElementById('supprimerUser');
 
-            openBtnSup.addEventListener('click', function() {
+            document.getElementById('openBtnSup').addEventListener('click', function() {
                 dialogSup.setAttribute('open', true);
                 console.log("dialog ouvert");
             })
 
-            closeBtnSup.addEventListener('click', function() {
+            document.getElementById('closeBtnSup').addEventListener('click', function() {
                 dialogSup.removeAttribute('open');
                 console.log("dialog fermé");
             });
 
-            btnSupprimerUser.addEventListener('click', deleteUser);
+            document.getElementById('supprimerUser').addEventListener('click', deleteUser);
 
-            // AJOUTER UNE TEAM
+            //////////////////////////// AJOUTER UNE TEAM
             const ajouterTeam = document.getElementById("ajouterTeam");
             const divAjoutTeam = document.getElementById("divAjoutTeam");
             const TeamsExistantes = document.getElementById("TeamsExistantes");
@@ -94,8 +91,8 @@
                     console.log("ajout team annulé");
                 });
         }
-
-        // RECUPERER LE USERNAME
+////////////////////////////////////////////////////  UTILISATEUR  ////////////////////////////////////////////////////////
+        //////////////////////////// RECUPERER LE USERNAME
         async function recupUserInfo(){
             let repUser = await fetch("/api/utilisateur/"+monId, {
                 method: "GET",
@@ -125,117 +122,7 @@
         };
         recupUserInfo();
 
-        // RECUPERER LA TEAM SI IL Y A
-        async function recupTeam(){
-            let repUser = await fetch("/api/utilisateur/"+monId, {
-                method: "GET",
-                headers: {
-                    'content-type': 'application/json',
-                    'authorization': localStorage.getItem('token'),
-                }
-            });
-            // Récupère mon user
-            let myUser =  await repUser.json()
-            // Récupère mon id de Team
-            var myIdTeam = myUser.user.team;
-
-            if(myIdTeam!= null){
-                // Récupère mon élément et ajoute si une team ses caractéristique
-                let repTeam = await fetch("/api/team/"+myIdTeam, {
-                    method: "GET",
-                    headers: {'Content-Type': 'application/json'}
-                });
-                // Récupère mon user
-                let myTeamInfo =  await repTeam.json()
-
-                document.getElementById("maTeamAMoi").insertAdjacentHTML("afterend",
-                    "<ul id=\"maTeamUl\"><li>"+myTeamInfo.team.nomTeam+"</li><li>"+myTeamInfo.team.Description+"</li><li>"+myTeamInfo.team.dateCreation+"</li></ul>");
-                document.getElementById("maTeamUl").insertAdjacentHTML("afterend",
-                    "<button id=\"suppTeam\">Supprimer ma team</button>");
-                document.getElementById("ajouterTeam").display = "none";
-
-                
-                const supprimerTeam = document.getElementById("suppTeam");
-                supprimerTeam.addEventListener('click', function() {
-                    divAjoutTeam.style.display = "block";
-                    TeamsExistantes.style.display = "block";
-                    ajouterTeam.style.display = "block";
-                    validerTeam.style.display = "none";
-                    annulerTeam.style.display = "none";
-                    suppTeam();
-                });
-                // SUPPRIMER BOUTON AJOUT
-            } else {
-                document.getElementById("maTeamAMoi").insertAdjacentHTML("afterend",
-                "<p>Tu n'as pas encore de Team !</p>");
-                
-                recupAllTeam();
-            }
-        };
-        recupTeam();
-
-        // RECUPERER TOUTES LES TEAMS
-        async function recupAllTeam(){
-            let repTeams = await fetch("/api/team/", {
-                method: "GET",
-                headers: {
-                    'content-type': 'application/json',
-                    'authorization': localStorage.getItem('token'),
-                }
-            });
-            if (repTeams.ok){
-                let teamsRecup = await repTeams.json();
-                let maDivDeTeam = "<select name=\"teams\" id=\"team-select\"><option value=\"\">--Choisis ta team !--</option>";
-                for(i = 0; i < teamsRecup.team.length; i++){
-                    maDivDeTeam  += "<option value=\""+teamsRecup.team[i]._id+"\">"+teamsRecup.team[i].nomTeam+"</option>";
-                }
-                maDivDeTeam += "</select>";
-                document.getElementById("TeamsExistantes").innerHTML  += maDivDeTeam; 
-            }else {
-                alerte("Un problème est survenu, veuillez réessayer")
-            }
-        };
-
-        // AJOUT TEAM
-        async function addTeam(){
-            let teamRecup = document.getElementById("team-select").value;
-            let data = {team: teamRecup};
-            let repUser = await fetch("/api/utilisateur/team/"+monId, {
-                method: "PUT",
-                headers: {
-                    'content-type': 'application/json',
-                    'authorization': localStorage.getItem('token'),
-                },
-                body: JSON.stringify(data)
-            });
-            if (repUser.ok) {
-                console.log("ajout team");
-                window.location.href="/home.html";
-            } else {
-                alert("Un problème est survenu lors de l'ajout")
-            }
-        };
-
-        // SUPPRIMER TEAM
-        async function suppTeam(){
-            let data = {team: null};
-            let repUser = await fetch("/api/utilisateur/team/"+monId, {
-                method: "PUT",
-                headers: {
-                    'content-type': 'application/json',
-                    'authorization': localStorage.getItem('token'),
-                },
-                body: JSON.stringify(data)
-            });
-            if (repUser.ok) {
-                console.log("supp team");
-                window.location.href="/home.html";
-            } else {
-                alert("Un problème est survenu lors de la suppression")
-            }
-        };
-
-        // MODIFIER USER 
+        //////////////////////////// MODIFIER USER 
 
         async function updateUser(){
             let data = {username: (document.getElementById("username").value ? document.getElementById("username").value : ""),
@@ -260,7 +147,7 @@
             }
         };
         
-        // FONCTION SUPPRIMER
+        //////////////////////////// FONCTION SUPPRIMER USER
         async function deleteUser(){
             let repUser = await fetch("/api/utilisateur/"+monId, {
                 method: "DELETE",
@@ -276,7 +163,7 @@
             window.location.href="/index.html";
         };
 
-        // FONCTION SUPPRIMER
+        //////////////////////////// FONCTION DECONNEXION 
         async function logoutUser(){            
             localStorage.removeItem("id");
             localStorage.removeItem("token");
@@ -285,8 +172,131 @@
             window.location.href="/index.html";
         };
 
+//////////////////////////////////////////////////////  TEAM  //////////////////////////////////////////////////////////
+
+        //////////////////////////// RECUPERER LA TEAM SI IL Y A
+        async function recupTeam(){
+            let repUser = await fetch("/api/utilisateur/"+monId, {
+                method: "GET",
+                headers: {
+                    'content-type': 'application/json',
+                    'authorization': localStorage.getItem('token'),
+                }
+            });
+            if(repUser.ok){ 
+                // Récupère mon user
+                let myUser =  await repUser.json()
+                // Récupère mon id de Team
+                var myIdTeam = myUser.user.team;
+
+                if(myIdTeam!= null){
+                    // Récupère mon élément et ajoute si une team ses caractéristique
+                    let repTeam = await fetch("/api/team/"+myIdTeam, {
+                        method: "GET",
+                        headers: {'Content-Type': 'application/json'}
+                    });
+                    // Récupère mon user
+                    let myTeamInfo =  await repTeam.json()
+
+                    document.getElementById("maTeamAMoi").insertAdjacentHTML("afterend",
+                        "<ul id=\"maTeamUl\"><li>"+myTeamInfo.team.nomTeam+"</li><li>"+myTeamInfo.team.Description+"</li><li>"+myTeamInfo.team.dateCreation+"</li></ul>");
+                    document.getElementById("maTeamUl").insertAdjacentHTML("afterend",
+                        "<button id=\"suppTeam\">Supprimer ma team</button>");
+                    
+                        
+                    const ajouterTeam = document.getElementById("ajouterTeam");
+                    const divAjoutTeam = document.getElementById("divAjoutTeam");
+                    
+                    ajouterTeam.style.display = "none";
+                    divAjoutTeam.style.display = "none";
+
+                    
+                    const supprimerTeam = document.getElementById("suppTeam");
+                    supprimerTeam.addEventListener('click', function() {
+                        divAjoutTeam.style.display = "block";
+                        document.getElementById("TeamsExistantes").style.display = "block";
+                        ajouterTeam.style.display = "block";
+                        document.getElementById("validerTeam").style.display = "none";
+                        document.getElementById("annulerTeam").style.display = "none";
+                        suppTeam();
+                    });
+                } else {
+                    document.getElementById("maTeamAMoi").insertAdjacentHTML("afterend",
+                    "<p>Tu n'as pas encore de Team !</p>");
+                    
+                    recupAllTeam();
+                }
+            }
+        };
+        recupTeam();
+
+        //////////////////////////// RECUPERER TOUTES LES TEAMS
+        async function recupAllTeam(){
+            let repTeams = await fetch("/api/team/", {
+                method: "GET",
+                headers: {
+                    'content-type': 'application/json',
+                    'authorization': localStorage.getItem('token'),
+                }
+            });
+            if (repTeams.ok){
+                let teamsRecup = await repTeams.json();
+                let maDivDeTeam = "<select name=\"teams\" id=\"team-select\"><option value=\"\">--Choisis ta team !--</option>";
+                for(i = 0; i < teamsRecup.team.length; i++){
+                    maDivDeTeam  += "<option value=\""+teamsRecup.team[i]._id+"\">"+teamsRecup.team[i].nomTeam+"</option>";
+                }
+                maDivDeTeam += "</select>";
+                document.getElementById("TeamsExistantes").innerHTML  += maDivDeTeam; 
+            }else {
+                alerte("Un problème est survenu, veuillez réessayer")
+            }
+        };
+
+        //////////////////////////// AJOUT TEAM
+        async function addTeam(){
+            let teamRecup = document.getElementById("team-select").value;
+            let data = {team: teamRecup};
+            let repUser = await fetch("/api/utilisateur/team/"+monId, {
+                method: "PUT",
+                headers: {
+                    'content-type': 'application/json',
+                    'authorization': localStorage.getItem('token'),
+                },
+                body: JSON.stringify(data)
+            });
+            if (repUser.ok) {
+                console.log("ajout team");
+                window.location.href="/home.html";
+            } else {
+                alert("Un problème est survenu lors de l'ajout")
+            }
+        };
+
+        //////////////////////////// SUPPRIMER TEAM
+        async function suppTeam(){
+            let data = {team: null};
+            let repUser = await fetch("/api/utilisateur/team/"+monId, {
+                method: "PUT",
+                headers: {
+                    'content-type': 'application/json',
+                    'authorization': localStorage.getItem('token'),
+                },
+                body: JSON.stringify(data)
+            });
+            if (repUser.ok) {
+                console.log("supp team");
+                window.location.href="/home.html";
+            } else {
+                alert("Un problème est survenu lors de la suppression")
+            }
+        };
+
     </script>
 </head>
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!-- BODY -->
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 <body>
     <!-- HEADER -->
@@ -294,7 +304,7 @@
         <ul>
           <li><a href="">Acceuil</a></li>
           <li><a href="/entrainement.html">Entrainements</a></li>
-          <li><button action="javascript:logoutUser()">Déconnexion</button>
+          <li><a href="/sport.html">Sports</a></li>
             <input id="Déconnexion" type="button" value="Déconnexion" onclick="logoutUser();"/></li>
         </ul>
       </footer>
@@ -351,12 +361,7 @@
             <button id="supprimerUser">Supprimer défninitivement</button>
         </dialog>
     </div>
-
-    <!-- ENTRAINEMENT -->
-    <div id="divEntrainements">
-        <h1>Mes entrainements</h1>
-        <a href="/entrainement.html" id="entrainements">S'entrainer !</a>
-    </div>
+    
     <!-- TEAM -->
     <div id="team">
         <h1 id="maTeamAMoi">Ma Team</h1>
@@ -369,17 +374,32 @@
         </div>
     </div>
 
+    <!-- SPORT -->
+    <div id="sport">
+        <h1 id="mesSports"></h1>
+    </div>
+
+    <!-- ENTRAINEMENT -->
+    <div id="divEntrainements">
+        <h1>Mes entrainements</h1>
+        <a href="/entrainement.html" id="entrainements">S'entrainer !</a>
+    </div>
+
     <!-- FOOTER -->
     <footer class="footer">
         <ul>
-          <li><a href="#aPropos">À propos</a></li>
+          <li><a href="aPropos.html">À propos</a></li>
           <li><a href="#politique">Politique de confidentialité</a></li>
           <li><a href="#session">Session</a></li>
           <li><a href="#reseaux">Réseaux sociaux</a></li>
         </ul>
-      </footer>
+    </footer>
     </div> 
 </body>
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!-- STYLE -->
+<!------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 <!-- STYLE POUR LES POP-UP-->
 <style>

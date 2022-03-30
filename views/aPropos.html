@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>A Propos - Sportime</title>
+    <!--<link href="css/stylesheet.css" rel="stylesheet">-->
+    <link rel="icon" href="img/logo.ico">
+</head>
+<body>
+    <a id="retourSite" href="">Rtour au site</a>
+    <h1>A propos</h1>
+    <h2>©Sportime</h2>
+    <p>MEILLEUR APPLI DU MONDE OUAIS OUAIS OUAIS !!!! feu feu</p>
+</body>
+</html>
+
+<script>
+    let monId = localStorage.getItem("id");
+
+    if(monId != null){
+        let a = document.getElementById("retourSite");
+        a.href ="/home.html";
+    }else {
+        let a = document.getElementById("retourSite");
+        a.href ="/index.html";
+    }
+</script>
