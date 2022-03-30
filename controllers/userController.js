@@ -97,11 +97,12 @@ exports.loginUser = (req, res) => {
 //////////////////////////////////// GET
 
 exports.getAllUsers = (req, res) => {
+    /*
     const headerAuth = req.headers['authorization'];
     const userId = jwtUtils.getId(headerAuth);
     if (userId < 0) {
         return res.status(401).json({ 'error': 'Bad token'});
-    }
+    }*/
 
     User.find()
     .then((users) => { return res.status(200).json({users})})
@@ -189,8 +190,8 @@ exports.putUser = (req, res) => {
         bcrypt.hash(mdp, 5, function( err, bcryptedPassword ){
             console.log(user);
             user.username = (req.body.username ? req.body.username : user.username),
-            user.prenom = (req.body.prenom ? req.body.prenom : user.prenom),
             user.nom = (req.body.nom ? req.body.nom : user.nom),
+            user.prenom = (req.body.prenom ? req.body.prenom : user.prenom),
             user.ville_fav = (req.body.ville_fav ? req.body.ville_fav.toLowerCase() : user.ville_fav),
             user.tel = (req.body.tel ? req.body.tel : user.tel),
             user.dateNaissance = (req.body.dateNaissance ? req.body.dateNaissance : user.dateNaissance),

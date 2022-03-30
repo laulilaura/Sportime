@@ -1,0 +1,210 @@
+@import "bourbon";
+
+* {
+  box-sizing: border-box;
+}
+
+.kill--list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.float--list {
+  @include clearfix;
+  li {
+    float: left;
+  }
+}
+
+body {
+  background: #424242;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
+
+.users_modal {
+  @include position(absolute, 40px null null 50%);
+  margin-left: -250px;
+  width: 500px;
+  
+  background: #FFF;
+  
+  border-radius: 3px;
+  
+  overflow: hidden;
+
+  a {
+    text-decoration: none;
+  }
+  
+  nav {
+    display: block;
+    margin-bottom: 40px;
+    border-radius: 3px;
+    li {
+      width: 50%;
+      a {
+        display: block;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 1.25rem;
+        font-weight: 600;
+        padding: 10px 0;
+        color: #222;
+        &:hover {
+          color: #990000;
+        }
+      }
+    }
+  }
+  
+  p.or__spot {
+    padding: 10px 0;
+    font-size: .7rem;
+    font-weight: 700;
+    text-align: center;
+  }
+  
+  .login__social {
+    padding: 0 40px;
+    a.btn__fb_login {
+      display: block;
+      padding: 10px 0;
+      width: 100%;
+      text-align: center;
+      background: #3b5998;
+      color: #FFF;
+      border-radius: 3px;
+    } 
+  }
+    
+  .login__form_block {
+    display: none;
+    form {
+      display: block;
+      padding: 0 40px 40px;
+    }
+  }
+  
+  .login__input_block {
+    position: relative;
+    height: 40px;
+    line-height: 40px;
+    margin-bottom: 15px;
+    border: 1px solid #CCC;
+    border-radius: 3px;
+    overflow: hidden;
+    label {
+      position: absolute;
+      top: 0px;
+      z-index: 0;
+      left: 350px;
+      width: 60px;
+      display: block;
+      height: inherit;
+      line-height: inherit;
+      font-size: .75rem;
+      font-weight: 600;
+      color: #999;
+      text-align: right;
+      @include transition(all .3s ease-in-out);
+    }
+    input[type="text"], input[type="email"], input[type="password"] {
+      @include position(absolute, 0px null null 0px);
+      z-index: 1;
+      padding: 0 10px;
+      width: 100%;
+      height: inherit;
+      height: inherit;
+      border: 0;
+      font-size: 1rem;
+      line-height: inherit;
+      background: transparent;
+      outline: none;
+      &[value=""] + label {
+        left: 10px;
+        text-align: left;
+      }
+      &:focus + label {
+        left: 350px;
+        text-align: right;
+      }
+      &.valid + label {
+        left: 350px;
+        text-align: right;
+      }
+    }
+  }
+  
+  .login__submit_block {
+    input[type="submit"] {
+      display: block;
+      padding: 15px 0;
+      width: 100%;
+      background: #990000;
+      border: 0;
+      border-radius: 3px;
+      font-size: 1.25rem;
+      color: #FFF;
+    }
+    .login__submit_block__forgot {
+      display: block;
+      margin-bottom: 15px;
+      font-size: .7rem;
+      color: #990000;
+      font-weight: 700;
+    }
+  }
+  
+  footer {
+    border-top: 1px solid #CCC;
+    padding: 8px 10px;
+  }
+  
+  &--login {
+    nav {
+      li:last-child {
+        background: #CCC;
+        a {
+          color: #666;
+        }
+      }
+    }
+    .login__form_block--login {
+      display: block;
+    }
+  }
+  
+  &--signup {
+    nav {
+      li:first-child {
+        background: #CCC;
+        a {
+          color: #666;
+        }
+      }
+    }
+    .login__form_block--signup {
+      display: block;
+    }
+  }
+  
+  &--forgotpass {
+    nav {
+      li:last-child {
+        background: #CCC;
+        a {
+          color: #666;
+        }
+      }
+    }
+    .login__social, .or__spot {
+      display: none;
+    }
+    .login__form_block--forgotpass {
+      display: block;
+    }
+  }
+  
+}
