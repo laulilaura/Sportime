@@ -95,3 +95,17 @@ body {
     color: red;
     font-size: small;
 }
+
+th {
+    display: table-cell;
+    vertical-align: inherit;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+}
+
+td {
+    display: table-cell;
+    vertical-align: inherit;
+    text-align: center;
+}

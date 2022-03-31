@@ -3,18 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>S'entrainer - Sportime</title>
+    <link rel="icon" href="img/logo.ico">
+    <link href="css/entrainement.css" rel="stylesheet">
 </head>
 
 <body>
-      
-<!-- BODY -->
-<div id="entrainer">
+  <!-- HEADER -->
+  <header class="header">
+    <ul id="ulHeader">
+        <li><a>Acceuil</a></li>
+        <li><a href="/entrainement.html">Entrainements</a></li>
+        <li><a href="/sport.html">Sports</a></li>
+        <li><input id="Déconnexion" type="button" value="Déconnexion" onclick="logoutUser();"/></li>
+    </ul>
+  </header>
+  <!-- BODY -->
+  <div id="entrainer">
+  <!--
   <form action="javascript:entrainement()">
     <p>Je vais m'entrainer ...</p>
     <br/>
     <label for="quand">Quand ?</label>
     <input type="date" name="date" id="date" placeholder="Date"/>
-    <!-- A CHANGER -->
+    A CHANGER
     <input type="time" name="heure" id="heure" placeholder="heure"/>
     <br/>
     <label for="ou">Où ?</label>
@@ -37,20 +48,20 @@
     <br/>
     <input type="submit" value="J'y vais !">
   </form>
-</div>
+  -->
+  </div>
   
-<!-- FOOTER -->
-      <footer class="footer">
-        <ul>
-          <li><a href="#aPropos">À propos</a></li>
-          <li><a href="#politique">Politique de confidentialité</a></li>
-          <li><a href="#session">Session</a></li>
-          <li><a href="#reseaux">Réseaux sociaux</a></li>
-        </ul>
-      </footer>
-    </div> 
+  <!-- FOOTER -->
+  <footer class="footer">
+    <ul id="ulFooter">
+      <li><a href="aPropos.html">À propos</a></li>
+      <li><a href="#politique">Politique de confidentialité</a></li>
+      <li><a href="#session">Session</a></li>
+      <li><a href="#reseaux">Réseaux sociaux</a></li>
+    </ul>
+  </footer>
 
-<!--Js -->
+  <!--Js 
     <script>
       async function blabla(){
         let data = {username: document.getElementById("username").value,
@@ -71,7 +82,7 @@
       sessionStorage.setItem("_id", monIdDUSER);
       window.location.href="/home.html"
       };
-    </script>
+    </script>-->
     
   </body>
 </html>

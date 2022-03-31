@@ -44,6 +44,31 @@
                     var body = document.getElementById("tabSports");
                     // Création d'un <table> element et d'un <tbody> element
                     var tbl = document.createElement("table");
+
+                    var tblTHead = document.createElement("thead");
+
+                    var tr = document.createElement("tr");
+
+                    var thNom = document.createElement("th");
+                    var thCat = document.createElement("th");
+                    var thDate = document.createElement("th");
+
+                    var cellNom = document.createTextNode("Sport");
+                    var cellCat = document.createTextNode("Niveau (1-5)");
+                    var cellDate = document.createTextNode("Avis sur ce sport");
+
+                    thNom.appendChild(cellNom);
+                    thCat.appendChild(cellCat);
+                    thDate.appendChild(cellDate);
+
+                    tr.appendChild(thNom);
+                    tr.appendChild(thCat);
+                    tr.appendChild(thDate);
+
+                    tblTHead.appendChild(tr);
+
+                    tbl.appendChild(tblTHead);
+
                     var tblBody = document.createElement("tbody");
 
                     // création de ligne
@@ -124,6 +149,32 @@
                 var bodyAll = document.getElementById("tabAllSports");
                 // Création d'un <table> element et d'un <tbody> element
                 var tblAll = document.createElement("table");
+                
+                var tblTHeadAll = document.createElement("thead");
+
+                var trAll = document.createElement("tr");
+
+                var thNom = document.createElement("th");
+                var thCat = document.createElement("th");
+                var thDate = document.createElement("th");
+                
+                var cellNom = document.createTextNode("Sport");
+                var cellCat = document.createTextNode("Catégorie");
+                var cellDate = document.createTextNode("Description");
+                
+                thNom.appendChild(cellNom);
+                thCat.appendChild(cellCat);
+                thDate.appendChild(cellDate);
+
+                trAll.appendChild(thNom);
+                trAll.appendChild(thCat);
+                trAll.appendChild(thDate);
+                
+                tblTHeadAll.appendChild(trAll);
+
+                console.log(tblTHeadAll);
+                tblAll.appendChild(tblTHeadAll);
+
                 var tblBodyAll = document.createElement("tbody");
 
                 // création de ligne
@@ -173,15 +224,14 @@
         }
         recupAllSport();
 
-        async function ajouterSport(idSport) {
+        async function ajouterSport(idSport) { // !!! + vérifier que ce sport n'est pas déjà en base pour le user
             let monIdSport = arguments[0];
-            // expected output: l'id de la team passé en paramètre
             
             let data = {
                 idSport: monIdSport,
                 idUser: monId,
-                niveau : 2,
-                avis : "Super"
+                niveau : 2, // A CHANGER !!!
+                avis : "Super" // A CHANGER !!!
             };
             let repPratique = await fetch("/api/pratique/", {
                 method: "POST",
@@ -227,9 +277,9 @@
     <!-- HEADER -->
     <header class="header">
         <ul id="ulHeader">
-            <li><a href="">Acceuil</a></li>
+            <li><a href="/home.html">Acceuil</a></li>
             <li><a href="/entrainement.html">Entrainements</a></li>
-            <li><a href="/sport.html">Sports</a></li>
+            <li><a>Sports</a></li>
             <li><input id="Déconnexion" type="button" value="Déconnexion" onclick="logoutUser();"/></li>
         </ul>
       </footer>

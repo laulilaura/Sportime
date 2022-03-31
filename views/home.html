@@ -198,12 +198,12 @@
                     // Récupère mon user
                     let myTeamInfo =  await repTeam.json()
 
+                    let maDateCrea = new Date(myTeamInfo.team.dateCreation); // Mise au format lisible
                     document.getElementById("maTeamAMoi").insertAdjacentHTML("afterend",
-                        "<ul id=\"maTeamUl\"><li>"+myTeamInfo.team.nomTeam+"</li><li>"+myTeamInfo.team.Description+"</li><li>"+myTeamInfo.team.dateCreation+"</li></ul>");
-                    document.getElementById("maTeamUl").insertAdjacentHTML("afterend",
-                        "<button id=\"suppTeam\"  class=\"butt\">Supprimer ma team</button>");
-                    
-                        
+                    "<table><thead><tr><th>Nom de Team</th><th>Description</th><th>Date de création</th></tr></thead><tbody><tr id=\"maTeamTr\"><td>"+myTeamInfo.team.nomTeam+"</td><td>"+myTeamInfo.team.nomDescriptionTeam+"</td><td>"+maDateCrea.toLocaleDateString('fr-CA')+"</td></tr></tbody></table>");
+                    document.getElementById("maTeamTr").insertAdjacentHTML("afterend",
+                    "<button id=\"suppTeam\"  class=\"butt\">Supprimer ma team</button>");
+
                     const ajouterTeam = document.getElementById("ajouterTeam");
                     const divAjoutTeam = document.getElementById("divAjoutTeam");
                     
@@ -302,12 +302,12 @@
     <!-- HEADER -->
     <header class="header">
         <ul id="ulHeader">
-            <li><a href="">Acceuil</a></li>
+            <li><a>Acceuil</a></li>
             <li><a href="/entrainement.html">Entrainements</a></li>
             <li><a href="/sport.html">Sports</a></li>
             <li><input id="Déconnexion" type="button" value="Déconnexion" onclick="logoutUser();"/></li>
         </ul>
-      </footer>
+    </header>
     </div> 
 
     <!-- PROFIL -->
