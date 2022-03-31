@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Politique de confidentialité - Sportime</title>
+    <link rel="icon" href="img/logo.ico">
+</head>
+<body>
+    <a id="retourSite" href="">Retour au site</a>
+    <h1>Politique de confidentialité</h1>
+    <p>Sportime ne vends pas vos données et ne récupère que votre token de connexion<br>
+        On vous laisse donc manger vos cookies !</p>
+</body>
+</html>
+
+<script>
+     window.onload=function(){
+        let monId = localStorage.getItem("id");
+        
+        if(monId != null){
+            let a = document.getElementById("retourSite");
+            a.href ="/home.html";
+        }else {
+            let a = document.getElementById("retourSite");
+            a.href ="/index.html";
+        }
+    }
+</script>
+
+<style>
+    body {
+        font-family:  'Prompt', Georgia, serif;
+        text-align: center;
+    }
+    #retourSite {
+        border: none;
+        background-color: hsl(0, 0%, 20%);
+        color: #fff;
+        border-radius: 3px;
+        width: 5%;
+        height: 3%;
+        font-size: 1rem;
+        font-family: sans-serif;
+        cursor: pointer;
+    }
+
+</style>
