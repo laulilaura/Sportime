@@ -90,7 +90,7 @@
             });
             if (repUser.ok) {
                 console.log("update");
-                window.location.href="/home.html";
+                window.location.href="/adminPage.html";
             }
         };
         /*
@@ -112,33 +112,94 @@
         async function logoutUser(){            
             localStorage.removeItem("id");
             localStorage.removeItem("token");
+            localStorage.removeItem("admin");
             localStorage.clear();
             window.location.href="/index.html";
         };
 
 //////////////////////////////////////////////////////  TEAM  //////////////////////////////////////////////////////////
 
-        //////////////////////////// RECUPERER TOUTES LES TEAMS
+        //////////////////////////// RECUPERER LE OU LES TEAM SI IL Y EN A
         async function recupAllTeam(){
-            let repTeams = await fetch("/api/team/", {
+            let repAllTeam = await fetch("/api/team/", {
                 method: "GET",
                 headers: {
                     'content-type': 'application/json',
                     'authorization': localStorage.getItem('token'),
                 }
             });
-            if (repTeams.ok){
-                let teamsRecup = await repTeams.json();
-                let maDivDeTeam = "<select name=\"teams\" id=\"team-select\"><option value=\"\">--Choisis ta team !--</option>";
-                for(i = 0; i < teamsRecup.team.length; i++){
-                    maDivDeTeam  += "<option value=\""+teamsRecup.team[i]._id+"\">"+teamsRecup.team[i].nomTeam+"</option>";
+            if (repAllTeam.ok){
+                // Récupère mes team
+                let allTeam =  await repAllTeam.json();
+                let nbTeam = allTeam.team.length;
+
+                var bodyAll = document.getElementById("tabAllTeams");
+                // Création d'un <table> element et d'un <tbody> element
+                var tblAll = document.createElement("table");
+                
+                var tblTHeadAll = document.createElement("thead");
+
+                var trAll = document.createElement("tr");
+
+                var thNom = document.createElement("th");
+                var thDesc = document.createElement("th");
+                var thDate = document.createElement("th");
+                
+                var cellNom = document.createTextNode("Sport");
+                var cellDesc = document.createTextNode("Description");
+                var cellDate = document.createTextNode("Date de création");
+                
+                thNom.appendChild(cellNom);
+                thDesc.appendChild(cellDesc);
+                thDate.appendChild(cellDate);
+
+                trAll.appendChild(thNom);
+                trAll.appendChild(thDesc);
+                trAll.appendChild(thDate);
+                
+                tblTHeadAll.appendChild(trAll);
+
+                console.log(tblTHeadAll);
+                tblAll.appendChild(tblTHeadAll);
+
+                var tblBodyAll = document.createElement("tbody");
+
+                // création de ligne
+                for (var i = 0; i < nbTeam; i++) {
+                    // creation d'une ligne du tableau
+                    var rowAll = document.createElement("tr");
+
+                    // création des colones
+                    var nomTeamAll = document.createElement("td");
+                    var descriptionAll = document.createElement("td");
+                    var dateCreationAll = document.createElement("td");
+
+                    var cellnomTeamAll = document.createTextNode(allTeam.team[i].nomTeam);
+                    var celldescriptionAll = document.createTextNode(allTeam.team[i].Description);
+                    let maDateCrea = new Date(allTeam.team[i].dateCreation);
+                    var celldateAll = document.createTextNode(maDateCrea.toLocaleDateString('fr-CA'));
+
+                    nomTeamAll.appendChild(cellnomTeamAll);
+                    descriptionAll.appendChild(celldescriptionAll);
+                    dateCreationAll.appendChild(celldateAll);
+
+                    rowAll.appendChild(nomTeamAll);
+                    rowAll.appendChild(descriptionAll);
+                    rowAll.appendChild(dateCreationAll);
+
+                    // ajout de la ligne au tableau
+                    tblBodyAll.appendChild(rowAll);
                 }
-                maDivDeTeam += "</select>";
-                document.getElementById("TeamsExistantes").innerHTML  += maDivDeTeam; 
-            }else {
-                alerte("Un problème est survenu, veuillez réessayer")
+
+                // put the <tbody> in the <table>
+                tblAll.appendChild(tblBodyAll);
+                tblAll.setAttribute("border", "1");
+                // appends <table> into <body>
+                bodyAll.appendChild(tblAll);
             }
-        };
+            
+        }
+        recupAllTeam();
 
         //////////////////////////// CREER TEAM
         async function createTeam(){
@@ -194,7 +255,7 @@
             <li><a>Acceuil</a></li>
             <li><a href="/entrainement.html">Entrainements</a></li>
             <li><a href="/sport.html">Sports</a></li>
-            <li><input id="Déconnexion" type="button" value="Déconnexion" onclick="logoutUser();"/></li>
+            <li><input id="Deconnexion" type="button" value="Déconnexion" onclick="logoutUser();"/></li>
         </ul>
     </header>
     </div> 
@@ -202,7 +263,7 @@
     <!-- PROFIL -->
     <div id="profil">
         <h1>Mon profil d'amin</h1>
-        <p>Vous êtes admin du site</p>
+        <p>Vous avez un compte admin</p>
         <p id="monUsername">Nom d'utilisateur : </p>
         <p id="monNom">Nom : </p>
         <p id="monPrenom">Prénom : </p>
@@ -259,11 +320,8 @@
         </div>
     </div>
 
-    <!-- SPORT -->
-    <div id="sport">
-        <h1 id="mesSports"></h1>
-    </div>
-
+    <h1>Toutes les teams</h1>
+    <div id="tabAllTeams"></div>
     
     <!-- ENTRAINEMENT -->
     <!--

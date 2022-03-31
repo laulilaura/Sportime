@@ -172,7 +172,6 @@
                 
                 tblTHeadAll.appendChild(trAll);
 
-                console.log(tblTHeadAll);
                 tblAll.appendChild(tblTHeadAll);
 
                 var tblBodyAll = document.createElement("tbody");
@@ -197,7 +196,7 @@
                     cellAjoutSport.type = "button"
                     cellAjoutSport.value = "Ajouter ce sport à mes pratiques"
                     cellAjoutSport.addEventListener('click', function(){
-                        ajouterSport(idSportFct);
+                        ajouterPratique(idSportFct);
                     });
 
                     nomSportAll.appendChild(cellnomSportAll);
@@ -224,7 +223,7 @@
         }
         recupAllSport();
 
-        async function ajouterSport(idSport) { // !!! + vérifier que ce sport n'est pas déjà en base pour le user
+        async function ajouterPratique(idSport) { // !!! + vérifier que ce sport n'est pas déjà en base pour le user
             let monIdSport = arguments[0];
             
             let data = {
@@ -280,7 +279,7 @@
             <li><a href="/home.html">Acceuil</a></li>
             <li><a href="/entrainement.html">Entrainements</a></li>
             <li><a>Sports</a></li>
-            <li><input id="Déconnexion" type="button" value="Déconnexion" onclick="logoutUser();"/></li>
+            <li><input id="Deconnexion" type="button" value="Déconnexion" onclick="logoutUser();"/></li>
         </ul>
       </footer>
     </div> 

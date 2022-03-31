@@ -2,9 +2,175 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>S'entrainer - Sportime</title>
+    <title>Entrainements - Sportime</title>
     <link rel="icon" href="img/logo.ico">
     <link href="css/entrainement.css" rel="stylesheet">
+
+    <script>
+      //////////////////////////// Get Storage
+      let monId = localStorage.getItem("id");
+      let monToken = localStorage.getItem("token");
+
+      //////////////////////////// FONCTION DECONNEXION 
+      async function logoutUser(){            
+          localStorage.removeItem("id");
+          localStorage.removeItem("token");
+          localStorage.removeItem("admin");
+          localStorage.clear();
+          window.location.href="/index.html";
+      };
+
+      //////////////////////////// RECUPERER LE OU LES SPORTS SI IL Y EN A
+      async function recupAllEntrainement(){
+            let repAllEntrainement = await fetch("/api/estPresent/", {
+                method: "GET",
+                headers: {
+                    'content-type': 'application/json',
+                    'authorization': localStorage.getItem('token'),
+                }
+            });
+            if (repAllEntrainement.ok){
+                // Récupère mes sports
+                let allPresences =  await repAllEntrainement.json()
+                let nbPresnece = allPresences.presences.length;
+
+                var bodyAll = document.getElementById("tabAllPresence");
+                // Création d'un <table> element et d'un <tbody> element
+                var tblAll = document.createElement("table");
+                
+                var tblTHeadAll = document.createElement("thead");
+
+                var trAll = document.createElement("tr");
+
+                var thSpot = document.createElement("th");
+                var thUser = document.createElement("th");
+                var thSport = document.createElement("th");
+                var thDate = document.createElement("th");
+                var thHeure = document.createElement("th");
+                var thnbPresent = document.createElement("th");
+                
+                var cellSpot = document.createTextNode("Spot");
+                var cellUser = document.createTextNode("Username de l'organisateur");
+                var cellSport = document.createTextNode("Sport pratiqué");
+                var cellDate = document.createTextNode("Date");
+                var cellHeure = document.createTextNode("Heure");
+                var cellNbPres = document.createTextNode("Nombre de Personnes présentes");
+                
+                thSpot.appendChild(cellSpot);
+                thUser.appendChild(cellUser);
+                thSport.appendChild(cellSport);
+                thDate.appendChild(cellDate);
+                thHeure.appendChild(cellHeure);
+                thnbPresent.appendChild(cellNbPres);
+
+                trAll.appendChild(thSpot);
+                trAll.appendChild(thUser);
+                trAll.appendChild(thSport);
+                trAll.appendChild(thDate);
+                trAll.appendChild(thHeure);
+                trAll.appendChild(thnbPresent);
+                
+                tblTHeadAll.appendChild(trAll);
+
+                tblAll.appendChild(tblTHeadAll);
+
+                var tblBodyAll = document.createElement("tbody");
+
+                // création de ligne
+                for (var i = 0; i < nbPresnece; i++) {
+                    // creation d'une ligne du tableau
+                    var rowAll = document.createElement("tr");
+
+                    // création des colones
+                    var spotAll = document.createElement("td");
+                    var UserAll = document.createElement("td");
+                    var sportAll = document.createElement("td");
+                    var dateAll = document.createElement("td");
+                    var heureAll = document.createElement("td");
+                    var presAll = document.createElement("td");
+
+                    // RECUPERER NOM DU SPORT A PARTIR D'UN FETCH SUR L'ID
+                    let repNomSport = await fetch("/api/sport/"+allPresences.presences[i].idSport, {
+                      method: "GET",
+                      headers: {
+                          'content-type': 'application/json',
+                          'authorization': localStorage.getItem('token'),
+                      }
+                    });
+                    if(repNomSport.ok){
+                      let mySport =  await repNomSport.json()
+                      var cellSport = document.createTextNode(mySport.sport.nomSport);
+                    }else {
+                      var cellSport = document.createTextNode(myPratiques.pratique[i].idSport);
+                    }
+
+                    // RECUPERER USERNAM A PARTIR D'UN FETCH SUR L'ID
+                    let repUsername = await fetch("/api/utilisateur/"+allPresences.presences[i].idUser, {
+                      method: "GET",
+                      headers: {
+                          'content-type': 'application/json',
+                          'authorization': localStorage.getItem('token'),
+                      }
+                    });
+                    if(repUsername.ok){
+                      let myUser =  await repUsername.json()
+                      var cellUser = document.createTextNode(myUser.user.username);
+                    }else {
+                      var cellUser = document.createTextNode(myPratiques.pratique[i].idUser);
+                    }
+
+                    // RECUPERER LE SPOT A PARTIR D'UN FETCH SUR L'ID
+                    let repSpot = await fetch("/api/spot/id/"+allPresences.presences[i].idSpot, {
+                      method: "GET",
+                      headers: {
+                          'content-type': 'application/json',
+                          'authorization': localStorage.getItem('token'),
+                      }
+                    });
+                    if(repSpot.ok){
+                      let mySpot =  await repSpot.json()
+                      var cellSpot = document.createTextNode(mySpot.spot.nomSpot);
+                    }else {
+                      var cellSpot = document.createTextNode(myPratiques.pratique[i].idSpot);
+                    }
+
+                    var cellspotAll = cellSpot;
+                    var celluserAll = cellUser;
+                    var cellsportAll = cellSport;
+                    let maDate = new Date(allPresences.presences[i].date); // Mise au format lisible
+                    var celldateAll = document.createTextNode(maDate.toLocaleDateString('fr-CA'));
+                    var cellheureAll = document.createTextNode(allPresences.presences[i].heure);
+                    var cellpresAll = document.createTextNode(allPresences.presences[i].nbPresent);
+                    
+                    
+                    spotAll.appendChild(cellspotAll);
+                    UserAll.appendChild(celluserAll);
+                    sportAll.appendChild(cellsportAll);
+                    dateAll.appendChild(celldateAll);
+                    heureAll.appendChild(cellheureAll);
+                    presAll.appendChild(cellpresAll);
+
+                    rowAll.appendChild(spotAll);
+                    rowAll.appendChild(UserAll);
+                    rowAll.appendChild(sportAll);
+                    rowAll.appendChild(dateAll);
+                    rowAll.appendChild(heureAll);
+                    rowAll.appendChild(presAll);
+
+                    // ajout de la ligne au tableau
+                    tblBodyAll.appendChild(rowAll);
+                }
+
+                // put the <tbody> in the <table>
+                tblAll.appendChild(tblBodyAll);
+                tblAll.setAttribute("border", "1");
+                // appends <table> into <body>
+                bodyAll.appendChild(tblAll);
+            }
+            
+        }
+        recupAllEntrainement();
+    </script>
 </head>
 
 <body>
@@ -14,7 +180,7 @@
         <li><a href="/home.html">Acceuil</a></li>
         <li><a>Entrainements</a></li>
         <li><a href="/sport.html">Sports</a></li>
-        <li><input id="Déconnexion" type="button" value="Déconnexion" onclick="logoutUser();"/></li>
+        <li><input id="Deconnexion" type="button" value="Déconnexion" onclick="logoutUser();"/></li>
     </ul>
   </header>
   <!-- BODY -->
@@ -50,6 +216,8 @@
   </form>
   -->
   </div>
+  <h1>Les entrainements proposés par d'autres utilisateurs</h1>
+  <div id="tabAllPresence"></div>
   
   <!-- FOOTER -->
   <footer class="footer">
