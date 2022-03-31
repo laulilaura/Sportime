@@ -1,3 +1,77 @@
+/*TITRE SECTION*/
+#imgLogo {
+  width: 50%;
+	height: 50%;
+}
+
+#divHeader{
+  background-color: #333;
+  position: fixed;
+  width: 100%;
+  display: block;
+  text-align: center;
+}
+
+/*NAV HEADER SECTION*/
+
+.ulHeader {
+  list-style-type: none;
+  margin: 0;
+  margin-left: -8px;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.liHead {
+  float: right;
+}
+
+.liHead a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+.liHead a:hover {
+  background-color: #111;
+}
+
+/*NAV FOOTER SECTION*/
+
+#ulFooter {
+  list-style-type: none;
+  margin: 1%;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+.liBot {
+  float: left;
+}
+
+.liBot a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+.liBot a:hover {
+  background-color: #111;
+}
+
+/*INFO SECTION*/
+
 .sectionInfos {
     width: 80%;
     margin: auto;
@@ -75,4 +149,6 @@
   }
   
   
-  
+  body {
+    font-family:  'Prompt', Georgia, serif;
+  }

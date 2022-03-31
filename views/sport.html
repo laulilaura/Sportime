@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Sports - Sportime</title>
     <link rel="icon" href="img/logo.ico">
+    <link href="css/sport.css" rel="stylesheet">
 
     <script>
         //////////////////////////// Get Storage
@@ -32,7 +33,7 @@
                 let myPratiques =  await repPratique.json()
                 let nbSport = myPratiques.pratique.length;
                 if(nbSport == 0){
-                    document.getElementById("mesSportsH1").innerHTML  = "Tu n'as pas encore de sports ! Ajoutes en";
+                    document.getElementById("mesSportsH1").innerHTML  = "Tu n'as pas encore de sports ! Ajoutes-en...";
                 } else {
                     if (nbSport == 1){
                         document.getElementById("mesSportsH1").innerHTML  = "Ton sport";
@@ -54,6 +55,7 @@
                         var idSport = document.createElement("td");
                         var niveau = document.createElement("td");
                         var avis = document.createElement("td");
+                        var butt = document.createElement("td");
 
                         // RECUPERER NOM DU SPORT A PARTIR D'UN FETCH SUR L'ID
                         let repNomSport = await fetch("/api/sport/"+myPratiques.pratique[i].idSport, {
@@ -71,14 +73,24 @@
                         }
                         var cellNiveau = document.createTextNode(myPratiques.pratique[i].niveau);
                         var cellAvis = document.createTextNode(myPratiques.pratique[i].avis);
+                        // Bouton
+                        let idPratique = myPratiques.pratique[i]._id;
+                        var cellSuppSport = document.createElement('input');
+                        cellSuppSport.type = "button"
+                        cellSuppSport.value = "Supprimer cette pratique"
+                        cellSuppSport.addEventListener('click', function(){
+                            supprimerPratique(idPratique);
+                        });
 
                         idSport.appendChild(cellSport);
                         niveau.appendChild(cellNiveau);
                         avis.appendChild(cellAvis);
+                        butt.appendChild(cellSuppSport);
 
                         row.appendChild(idSport);
                         row.appendChild(niveau);
                         row.appendChild(avis);
+                        row.appendChild(butt);
 
                         // ajout de la ligne au tableau
                         tblBody.appendChild(row);
@@ -123,18 +135,29 @@
                     var nomSportAll = document.createElement("td");
                     var categorieAll = document.createElement("td");
                     var descriptionAll = document.createElement("td");
+                    var ajouter = document.createElement("td");
 
                     var cellnomSportAll = document.createTextNode(allSport.sports[i].nomSport);
                     var cellcategorieAll = document.createTextNode(allSport.sports[i].categorie);
                     var celldescriptionAll = document.createTextNode(allSport.sports[i].description);
+                    // Bouton
+                    let idSportFct = allSport.sports[i]._id;
+                    var cellAjoutSport = document.createElement('input');
+                    cellAjoutSport.type = "button"
+                    cellAjoutSport.value = "Ajouter ce sport à mes pratiques"
+                    cellAjoutSport.addEventListener('click', function(){
+                        ajouterSport(idSportFct);
+                    });
 
                     nomSportAll.appendChild(cellnomSportAll);
                     categorieAll.appendChild(cellcategorieAll);
                     descriptionAll.appendChild(celldescriptionAll);
+                    ajouter.appendChild(cellAjoutSport);
 
                     rowAll.appendChild(nomSportAll);
                     rowAll.appendChild(categorieAll);
                     rowAll.appendChild(descriptionAll);
+                    rowAll.appendChild(ajouter);
 
                     // ajout de la ligne au tableau
                     tblBodyAll.appendChild(rowAll);
@@ -149,6 +172,50 @@
             
         }
         recupAllSport();
+
+        async function ajouterSport(idSport) {
+            let monIdSport = arguments[0];
+            // expected output: l'id de la team passé en paramètre
+            
+            let data = {
+                idSport: monIdSport,
+                idUser: monId,
+                niveau : 2,
+                avis : "Super"
+            };
+            let repPratique = await fetch("/api/pratique/", {
+                method: "POST",
+                headers: {
+                    'content-type': 'application/json',
+                    'authorization': localStorage.getItem('token'),
+                },
+                body: JSON.stringify(data)
+            });
+            if (repPratique.ok) {
+                console.log("ajout pratique");
+                window.location.href="/sport.html";
+            } else {
+                alert("Un problème est survenu lors de l'ajout du sport")
+            }
+        }
+
+        async function supprimerPratique(idPratique) {
+            let myidPratique = arguments[0];
+            
+            let repPratique = await fetch("/api/pratique/"+myidPratique, {
+                method: "DELETE",
+                headers: {
+                    'content-type': 'application/json',
+                    'authorization': localStorage.getItem('token'),
+                }
+            });
+            if (repPratique.ok) {
+                console.log("pratique supprimé");
+                window.location.href="/sport.html";
+            } else {
+                alert("Un problème est survenu lors de la suppression du sport")
+            }
+        }
     </script>
 </head>
 
@@ -159,13 +226,11 @@
 <body>
     <!-- HEADER -->
     <header class="header">
-        <ul>
-            <li><a href="/home.html">Acceuil</a></li>
+        <ul id="ulHeader">
+            <li><a href="">Acceuil</a></li>
             <li><a href="/entrainement.html">Entrainements</a></li>
             <li><a href="/sport.html">Sports</a></li>
-            </li>
-                <input id="Déconnexion" type="button" value="Déconnexion" onclick="logoutUser();"/>
-            </li>
+            <li><input id="Déconnexion" type="button" value="Déconnexion" onclick="logoutUser();"/></li>
         </ul>
       </footer>
     </div> 
@@ -184,12 +249,12 @@
 
     <!-- FOOTER -->
     <footer class="footer">
-        <ul>
-          <li><a href="aPropos.html">À propos</a></li>
-          <li><a href="#politique">Politique de confidentialité</a></li>
-          <li><a href="#session">Session</a></li>
-          <li><a href="#reseaux">Réseaux sociaux</a></li>
-        </ul>
+        <ul id="ulFooter">
+            <li><a href="aPropos.html">À propos</a></li>
+            <li><a href="#politique">Politique de confidentialité</a></li>
+            <li><a href="#session">Session</a></li>
+            <li><a href="#reseaux">Réseaux sociaux</a></li>
+          </ul>
     </footer>
 </body>
 </html>

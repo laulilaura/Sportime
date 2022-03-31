@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300&display=swap');
+
+
+/* ------NAV HEADER------ */
+
+#ulHeader {
+    list-style-type: none;
+    margin: 0;
+    margin-left: -8px;
+    padding: 0;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+  
+li {
+    display : inline-block;
+}
+  
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+  
+li a:hover {
+    background-color: #111;
+}
+
+
+/* ------NAV FOOTER------ */
+#ulFooter {
+    list-style-type: none;
+    margin: 0;
+    margin-left: -8px;
+    padding: 0;
+    background-color: #333;
+}
+
+/* Ajout tableau de ma team*/
+#maTeamUl {
+    border: #111 1px;
+}
+
+body {
+    font-family:  'Prompt', Georgia, serif;
+}

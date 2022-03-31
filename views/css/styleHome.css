@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300&display=swap');
+
+
+/* ------NAV HEADER------ */
+
+#ulHeader {
+    list-style-type: none;
+    margin: 0;
+    margin-left: -8px;
+    padding: 0;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+  
+li {
+    display : inline-block;
+}
+  
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+  
+li a:hover {
+    background-color: #111;
+}
+
+
+/* ------NAV FOOTER------ */
+#ulFooter {
+    list-style-type: none;
+    margin: 0;
+    margin-left: -8px;
+    padding: 0;
+    background-color: #333;
+}
+
+/* Ajout tableau de ma team*/
+#maTeamUl {
+    border: #111 1px;
+}
+
+body {
+    font-family:  'Prompt', Georgia, serif;
+}
+
+/* ------BOUTONS------ */
+.butt {
+    border: none;
+    background-color: hsl(0, 0%, 20%);
+    color: #fff;
+    border-radius: 3px;
+    width: 200px;
+    height: 40px;
+    font-size: 1rem;
+    font-family: sans-serif;
+    cursor: pointer;
+}
+
+#suppTeam:hover, #suppTeam:focus,
+#openBtnSup:hover, #openBtnSup:focus,
+#supprimerUser:hover, #supprimerUser:focus{
+    background-color: hsl(0, 56%, 30%);
+}
+
+#openBtnModif:hover, #openBtnModif:focus,
+#closeBtn:hover, #closeBtn:focus,
+#modifierUser:hover, #modifierUser:focus,
+#ajouterTeam:hover, #ajouterTeam:focus,
+#validerTeam:hover, #validerTeam:focus{
+    background-color: hsl(85, 34%, 55%);
+}
+
+#closeBtnModif:hover, #closeBtnModif:focus,
+#closeBtnSup:hover, #closeBtnSup:focus{
+    background-color: hsl(0, 0%, 89%);
+    color: #333;
+}
+
+#dialogSup {
+    width: 20%;
+    height: 20%;
+    position: absolute;
+    top: 60%;
+    font-family: sans-serif;
+    color: #555;
+}
+
+.obligation {
+    color: red;
+    font-size: small;
+}

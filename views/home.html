@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <title>Home page</title>
     <link rel="icon" href="img/logo.ico">
+    <link href="css/styleHome.css" rel="stylesheet">
     <script >
         //////////////////////////// Get Storage
         let monId = localStorage.getItem("id");
@@ -200,7 +201,7 @@
                     document.getElementById("maTeamAMoi").insertAdjacentHTML("afterend",
                         "<ul id=\"maTeamUl\"><li>"+myTeamInfo.team.nomTeam+"</li><li>"+myTeamInfo.team.Description+"</li><li>"+myTeamInfo.team.dateCreation+"</li></ul>");
                     document.getElementById("maTeamUl").insertAdjacentHTML("afterend",
-                        "<button id=\"suppTeam\">Supprimer ma team</button>");
+                        "<button id=\"suppTeam\"  class=\"butt\">Supprimer ma team</button>");
                     
                         
                     const ajouterTeam = document.getElementById("ajouterTeam");
@@ -300,11 +301,11 @@
 <body>
     <!-- HEADER -->
     <header class="header">
-        <ul>
-          <li><a href="">Acceuil</a></li>
-          <li><a href="/entrainement.html">Entrainements</a></li>
-          <li><a href="/sport.html">Sports</a></li>
-            <input id="Déconnexion" type="button" value="Déconnexion" onclick="logoutUser();"/></li>
+        <ul id="ulHeader">
+            <li><a href="">Acceuil</a></li>
+            <li><a href="/entrainement.html">Entrainements</a></li>
+            <li><a href="/sport.html">Sports</a></li>
+            <li><input id="Déconnexion" type="button" value="Déconnexion" onclick="logoutUser();"/></li>
         </ul>
       </footer>
     </div> 
@@ -320,9 +321,9 @@
         <p id="maDateDeNaissance">Date de naissance : </p>
 
         <!-- MODIFIER MON COMPTE -->
-        <button id="openBtnModif">Modifier mon profil</button>
+        <button id="openBtnModif" class="butt">Modifier mon profil</button>
         <dialog id="dialogModif">
-            <button id="closeBtnModif">Annuler</button>
+            <button id="closeBtnModif" class="butt">Annuler</button>
             <!-- Champs de mofication-->
             <form action="javascript:updateUser()">
                 <h2>Modifier vos données</h2>
@@ -348,16 +349,16 @@
                 <label class="obligation" >*obligatoire</label>
                 <input type="password" name="mdp" id="mdp" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$" title="Mot de passe non valide, il doit comporter au moins une minuscule, une majuscule, un chiffre et entre 8 et 20 charactères." required="required"/>
                 <br/>
-                <button id="modifierUser">Modifier</button>
+                <button id="modifierUser" class="butt">Modifier</button>
             </form>
             
         </dialog>
 
         <!-- SUPPRIMER MON COMPTE -->
-        <button id="openBtnSup">Supprimer mon compte</button>
+        <button id="openBtnSup" class="butt">Supprimer mon compte</button>
         <dialog id="dialogSup">
-            <button id="closeBtnSup">Annuler</button>
-            <button id="supprimerUser">Supprimer défninitivement</button>
+            <button id="closeBtnSup" class="butt">Annuler</button>
+            <button id="supprimerUser" class="butt">Supprimer défninitivement</button>
         </dialog>
     </div>
     
@@ -365,11 +366,11 @@
     <div id="team">
         <h1 id="maTeamAMoi">Ma Team</h1>
         <div id="divAjoutTeam">
-            <button id="ajouterTeam">Ajouter une team</button>
+            <button id="ajouterTeam" class="butt">Ajouter une team</button>
             <div id="TeamsExistantes">
             </div>
-            <button id="annulerTeam">Annuler</button>
-            <button id="validerTeam">Ajouter cette team</button>
+            <button id="annulerTeam" class="butt">Annuler</button>
+            <button id="validerTeam" class="butt">Ajouter cette team</button>
         </div>
     </div>
 
@@ -386,7 +387,7 @@
 
     <!-- FOOTER -->
     <footer class="footer">
-        <ul>
+        <ul id="ulFooter">
           <li><a href="aPropos.html">À propos</a></li>
           <li><a href="#politique">Politique de confidentialité</a></li>
           <li><a href="#session">Session</a></li>
@@ -396,48 +397,4 @@
     </div> 
 </body>
 
-<!------------------------------------------------------------------------------------------------------------------------------------------------------------->
-<!-- STYLE -->
-<!------------------------------------------------------------------------------------------------------------------------------------------------------------->
-
-<!-- STYLE POUR LES POP-UP-->
-<style>
-    #openBtnSup, #closeBtnSup {
-        border: none;
-        background-color: hsl(0, 0%, 20%);
-        color: #fff;
-        border-radius: 3px;
-        width: 200px;
-        height: 40px;
-        font-size: 1rem;
-        font-family: sans-serif;
-        cursor: pointer;
-    }
-
-    #closeBtnSup {
-        width: 80px;
-        height: 30px;
-        font-size: 0.9rem;
-        margin-bottom: 30px;
-    }
-
-    #openBtnSup:hover, #openBtnSup:focus,
-    #closeBtn:hover, #closeBtnSup:focus{
-        background-color: hsl(0, 56%, 30%);
-    }
-
-    #dialogSup {
-        width: 20%;
-        height: 20%;
-        position: absolute;
-        top: 60%;
-        font-family: sans-serif;
-        color: #555;
-    }
-
-    .obligation {
-        color: red;
-        font-size: small;
-    }
-</style>
 </html>
