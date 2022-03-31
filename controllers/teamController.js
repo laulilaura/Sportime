@@ -1,13 +1,23 @@
+const jwtUtils = require('../utils/jwt.utils');
 const Team = require('../models/teamModel');
 
 exports.createTeam = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const admin = jwtUtils.getAdmin(headerAuth);
+    if (!admin) {
+        return res.status(401).json({ 'error': 'non admin'});
+    }
+
     const team = new Team(req.body); 
+    console.log(team)
 
     team.save()
-    .then((team) => {
-        return res.status(201).json({team})
+   .then((team) => {
+        return res.status(200).json({team})
     })
-    .catch((error) => {return res.status(400).json({error}) });
+   .catch( (error) => { 
+    console.log(error);
+    return res.status(400).json({error}) });
 }
 
 exports.getOneTeamById = (req, res) => {

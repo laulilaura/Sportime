@@ -7,7 +7,8 @@ module.exports ={
             userId: userData._id,
             userUsername: userData.username,
             userNom: userData.nom,
-            userPrenom: userData.prenom
+            userPrenom: userData.prenom,
+            admin: userData.estAdmin
         },
         JWT_SECRET_SIGN,
         {
@@ -30,5 +31,19 @@ module.exports ={
             catch(err) {}
         }
         return userId;
+    },
+    getAdmin: function(authorization) {
+        var admin = false;
+        var token = module.exports.parseAuthorization(authorization);
+        if (token != null) {
+            try {
+                var jwtToken = jwt.verify(token, JWT_SECRET_SIGN);
+                if (jwtToken != null) {
+                    admin = jwtToken.admin;
+                }
+            }
+            catch(err) {}
+        }
+        return admin;
     }
 };

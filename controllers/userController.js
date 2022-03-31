@@ -33,7 +33,7 @@ exports.createUser = (req, res) => {
                 bcrypt.hash(mdp, 5, function( err, bcryptedPassword ){
                     const newUser = User.create({ 
                         username: username,
-                        estAdmin: false,
+                        estAdmin: req.body.estAdmin,
                         nom: nom,
                         prenom: prenom,
                         ville_fav: villeFave,
@@ -43,7 +43,6 @@ exports.createUser = (req, res) => {
                         team: req.body.team,
                     })
                     .then((newUser) => {
-                        console.log(newUser);
                         return res.status (200).json({
                             'userId': newUser._id,
                             'token': jwtUtils.generateTokenForUser(newUser)
@@ -73,7 +72,6 @@ exports.loginUser = (req, res) => {
 
     User.findOne({username: username})
     .then((userFound) => {
-        console.log(userFound);
         if (userFound) {
             bcrypt.compare(mdp, userFound.mdp, function(errBycrypt, resBycrypt) {
                 if(resBycrypt) {
@@ -94,12 +92,51 @@ exports.loginUser = (req, res) => {
     .catch((err) => { return res.status(500).json( {err} )});
 };
 
+//////////////////////////////////// LOGIN ADMIN
+
+exports.loginAdmin = (req, res) => {
+    const username = req.body.username; 
+    const mdp = req.body.mdp; 
+    if (username == null || mdp == null) {  
+        return res.status (400).json({ 'erreur': 'paramètre manquant' });
+    }
+
+    User.findOne({username: username})
+    .then((userFound) => {
+        console.log(userFound);
+        if (userFound) {
+            bcrypt.compare(mdp, userFound.mdp, function(errBycrypt, resBycrypt) {
+                if(resBycrypt) {
+                    console.log(userFound);
+                    console.log(userFound.estAdmin);
+                    if(userFound.estAdmin==true){
+                        return res.status (200).json({
+                            '_id': userFound.id,
+                            'token': jwtUtils.generateTokenForUser(userFound),
+                            'admin' : true
+                        });
+                    } else {
+                        return res.status(401).json({ 'erreur': 'utilisateur non autorisé' });
+                    }
+                } 
+                else {
+                    return res.status(403).json({ 'erreur': 'mot de passe invalide' });
+                };
+            });
+        }
+        else {
+            return res.status(404).json({ 'erreur': 'utilisateur inexistant'});
+        }
+    })
+    .catch((err) => { return res.status(500).json( {err} )});
+};
+
 //////////////////////////////////// GET
 
 exports.getAllUsers = (req, res) => {
     const headerAuth = req.headers['authorization'];
-    const userId = jwtUtils.getId(headerAuth);
-    if (userId < 0) {
+    const admin = jwtUtils.getAdmin(headerAuth);
+    if (!admin) {
         return res.status(401).json({ 'error': 'Bad token'});
     }
     User.find()
@@ -186,7 +223,6 @@ exports.putUser = (req, res) => {
     User.findOne({_id: id})
     .then ((user) => {
         bcrypt.hash(mdp, 5, function( err, bcryptedPassword ){
-            console.log(user);
             user.username = (req.body.username ? req.body.username : user.username),
             user.nom = (req.body.nom ? req.body.nom : user.nom),
             user.prenom = (req.body.prenom ? req.body.prenom : user.prenom),
@@ -209,16 +245,15 @@ exports.putUser = (req, res) => {
 
 
 exports.putUserTeam = (req, res) => {
-    /*const headerAuth = req.headers['authorization'];
+    const headerAuth = req.headers['authorization'];
     const userId = jwtUtils.getId(headerAuth);
     if (userId < 0) {
         return res.status(401).json({ 'erreur': 'Bad token'});
-    }*/
+    }
     const id = req.params.id;
 
     User.findOne({_id: id})
     .then ((user) => {
-        console.log("findUser");
         user.username = user.username,
         user.nom = user.nom,
         user.prenom = user.prenom,
@@ -239,7 +274,7 @@ exports.putUserTeam = (req, res) => {
 //////////////////////////////////// DELETE
 
 exports.delUser = (req, res) => {
-    
+
     const headerAuth = req.headers['authorization'];
     const userId = jwtUtils.getId(headerAuth);
     if (userId < 0) {

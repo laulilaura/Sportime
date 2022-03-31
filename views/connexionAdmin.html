@@ -10,8 +10,8 @@
 <body>
 <!-- BODY -->
 <div id="connexion">
-  <form action="javascript:connexion()">
-    <label for="username">Votre nom d'utilisateur :</label>
+  <form action="javascript:connexionAdmin()">
+    <label for="username">Votre nom d'administrateur :</label>
     <input type="text" name="username" id="username" required="required"/>
     <br/>
     <label for="mdp">Votre mot de passe :</label>
@@ -19,9 +19,6 @@
     <br/>
     <input type="submit" value="Connexion">
   </form>
-</div>
-<div id="connexionAdmin">
-  <a href="/connexionAdmin.html">Se connecter en tant qu'administrateur</a>
 </div>
   
     <!-- FOOTER -->
@@ -37,22 +34,24 @@
 
 <!--Js -->
     <script>
-        async function connexion(){
+
+        async function connexionAdmin(){
           let data = {username: document.getElementById("username").value,
-                  mdp: document.getElementById("mdp").value
+                    mdp: document.getElementById("mdp").value
                   }
-          let repUserLogin = await fetch("/api/utilisateur/login", {
+          let repAdminLogin = await fetch("/api/utilisateur/login/admin", {
               method: "POST",
               headers: {'Content-Type': 'application/json'}, 
               body: JSON.stringify(data)
           });
-          if(repUserLogin.ok){
-            let myUser =  await repUserLogin.json()
-            localStorage.setItem("id", myUser._id);
-            localStorage.setItem("token", myUser.token);
-            window.location.href="/home.html"
+          if(repAdminLogin.ok){
+            let admin =  await repAdminLogin.json()
+            localStorage.setItem("id", admin._id);
+            localStorage.setItem("token", admin.token);
+            localStorage.setItem("admin", admin.admin);
+            window.location.href="/adminPage.html"
           } else{
-            alert('Identifiant ou mot de passe incorecte');
+            alert('Identifiant ou mot de passe incorecte ou compte non administrateur');
           }          
         };
     </script>
