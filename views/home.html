@@ -200,7 +200,7 @@
 
                     let maDateCrea = new Date(myTeamInfo.team.dateCreation); // Mise au format lisible
                     document.getElementById("maTeamAMoi").insertAdjacentHTML("afterend",
-                    "<table><thead><tr><th>Nom de Team</th><th>Description</th><th>Date de création</th></tr></thead><tbody><tr id=\"maTeamTr\"><td>"+myTeamInfo.team.nomTeam+"</td><td>"+myTeamInfo.team.nomDescriptionTeam+"</td><td>"+maDateCrea.toLocaleDateString('fr-CA')+"</td></tr></tbody></table>");
+                    "<table><thead><tr><th>Nom de Team</th><th>Description</th><th>Date de création</th></tr></thead><tbody><tr id=\"maTeamTr\"><td>"+myTeamInfo.team.nomTeam+"</td><td>"+myTeamInfo.team.Description+"</td><td>"+maDateCrea.toLocaleDateString('fr-CA')+"</td></tr></tbody></table>");
                     document.getElementById("maTeamTr").insertAdjacentHTML("afterend",
                     "<button id=\"suppTeam\"  class=\"butt\">Supprimer ma team</button>");
 
@@ -379,11 +379,14 @@
         <h1 id="mesSports"></h1>
     </div>
 
+    
     <!-- ENTRAINEMENT -->
+    <!--
     <div id="divEntrainements">
         <h1>Mes entrainements</h1>
         <a href="/entrainement.html" id="entrainements">S'entrainer !</a>
     </div>
+    -->
 
     <!-- FOOTER -->
     <footer class="footer">
