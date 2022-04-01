@@ -1,6 +1,13 @@
 const Pratique = require('../models/pratiqueModel');
 
 exports.createPratique = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
+
     const pratique = new Pratique(req.body);
 
     pratique.save()
@@ -23,6 +30,13 @@ exports.getAllPratique = (req, res) => {
 }
 
 exports.getOnePratiqueById = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
+
     const idPratique = req.params.id;
 
     Pratique.findOne({_id: idPratique})
@@ -31,11 +45,12 @@ exports.getOnePratiqueById = (req, res) => {
 }
 
 exports.getPratiquesByUserid = (req, res) => {
-    /*const headerAuth = req.headers['authorization'];
+    const headerAuth = req.headers['authorization'];
     const userId = jwtUtils.getId(headerAuth);
+    
     if (userId < 0) {
-        return res.status(401).json({ 'error': 'Bad token'});
-    }*/
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
     const idUser = req.params.userId;
 
     Pratique.find({idUser: idUser})
@@ -44,6 +59,12 @@ exports.getPratiquesByUserid = (req, res) => {
 }
 
 exports.getPratiquesBySport = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
     const idSport = req.params.idSport;
 
     Pratique.find({idSport: idSport})
@@ -52,6 +73,12 @@ exports.getPratiquesBySport = (req, res) => {
 }
 
 exports.getPratiquesByNiveau = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
     const idNiveau = req.params.niveau;
 
     Pratique.find({niveau: idNiveau})
@@ -60,6 +87,12 @@ exports.getPratiquesByNiveau = (req, res) => {
 }
 
 exports.putPratique = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
     const id = req.params.id;
 
     Pratique.findOne({_id: id})
@@ -80,6 +113,12 @@ exports.putPratique = (req, res) => {
 };
 
 exports.delPratique = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
     const id = req.params.id;
 
     Pratique.deleteOne({_id: id})

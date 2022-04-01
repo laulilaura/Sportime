@@ -11,6 +11,12 @@ exports.createPresence = (req, res) => {
 }
 
 exports.getAllPresences = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
 
     EstPresent.find()
     .then((presences) => { return res.status(200).json({presences})})
@@ -18,6 +24,13 @@ exports.getAllPresences = (req, res) => {
 }
 
 exports.getPresenceBySport = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
+
     const idSport = req.params.idSport;
 
     EstPresent.find({idSport: idSport})
@@ -26,6 +39,13 @@ exports.getPresenceBySport = (req, res) => {
 }
 
 exports.getPresenceBySpot = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
+
     const idSpot = req.params.idSpot;
 
     EstPresent.find({idSpot: idSpot})
@@ -34,6 +54,13 @@ exports.getPresenceBySpot = (req, res) => {
 }
 
 exports.getPresenceByUser = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
+
     const idUser = req.params.idUser;
 
     EstPresent.find({idUser: idUser})
@@ -42,6 +69,12 @@ exports.getPresenceByUser = (req, res) => {
 }
 
 exports.getPresenceByDate = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
     const Date = req.params.date;
 
     EstPresent.find({date: Date})
@@ -50,6 +83,12 @@ exports.getPresenceByDate = (req, res) => {
 }
 
 exports.putPresence = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
     const id = req.params.id;
 
     EstPresent.findOne({_id: id})
@@ -72,6 +111,12 @@ exports.putPresence = (req, res) => {
 };
 
 exports.delPresence = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
     const id = req.params.id;
 
     EstPresent.deleteOne({_id: id})

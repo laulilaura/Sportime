@@ -2,6 +2,12 @@ const Sport = require('../models/sportModel');
 const jwtUtils = require('../utils/jwt.utils');
 
 exports.createSport = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
     const sport = new Sport(req.body);
 
     sport.save()
@@ -36,6 +42,12 @@ exports.getOneSportById = (req, res) => {
 }
 
 exports.getOneSportByName = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
     const nameSport = req.params.name;
 
     Sport.findOne({nomSport: nameSport})
@@ -44,6 +56,12 @@ exports.getOneSportByName = (req, res) => {
 }
 
 exports.putSport = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
     const id = req.params.id;
 
     Sport.findOne({_id: id})
@@ -63,6 +81,12 @@ exports.putSport = (req, res) => {
 };
 
 exports.delSport = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
     const id = req.params.id;
 
     Sport.deleteOne({_id: id})

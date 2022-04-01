@@ -21,6 +21,12 @@ exports.createTeam = (req, res) => {
 }
 
 exports.getOneTeamById = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
     const idTeam = req.params.idTeam;
 
     Team.findOne({_id: idTeam})
@@ -29,12 +35,24 @@ exports.getOneTeamById = (req, res) => {
 }
 
 exports.getAllTeams = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
     Team.find()
     .then((team) => { return res.status(200).json({team})})
     .catch((error) => { return res.status(400).json({error})});
 }
 
 exports.putTeam = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
     const id = req.params.id;
 
     Team.findOne({_id: id})
@@ -54,6 +72,12 @@ exports.putTeam = (req, res) => {
 };
 
 exports.delTeam = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
     const id = req.params.id;
 
     Team.deleteOne({_id: id})

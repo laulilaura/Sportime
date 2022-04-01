@@ -1,6 +1,12 @@
 const Spot = require('../models/spotModel');
 
 exports.createSpot = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
     const spot = new Spot(req.body);
 
     spot.save()
@@ -22,6 +28,12 @@ exports.getAllSpot = (req, res) => {
 }
 
 exports.getOneSpotById = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
     const idSpot = req.params.id;
 
     Spot.findOne({_id: idSpot})
@@ -30,6 +42,12 @@ exports.getOneSpotById = (req, res) => {
 }
 
 exports.getOneSpotByName = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
     const nomSpot = req.params.nomSpot;
 
     Spot.findOne({nomSpot: nomSpot})
@@ -38,6 +56,12 @@ exports.getOneSpotByName = (req, res) => {
 }
 
 exports.getSpotsByVille = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
     const villeSpot = req.params.nomVille;
 
     Spot.find({ville: villeSpot})
@@ -46,6 +70,12 @@ exports.getSpotsByVille = (req, res) => {
 }
 
 exports.putSpot = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
     const id = req.params.id;
 
     Spot.findOne({_id: id})
@@ -65,6 +95,12 @@ exports.putSpot = (req, res) => {
 };
 
 exports.delSpot = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
     const id = req.params.id;
 
     Spot.deleteOne({_id: id})
