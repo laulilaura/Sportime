@@ -2,6 +2,12 @@ const EstPresent = require('../models/estpresentModel');
 const jwtUtils = require('../utils/jwt.utils');
 
 exports.createPresence = (req, res) => {
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    
+    if (userId < 0) {
+        return res.status(401).json({ 'erreur': 'Bad token'});
+    }
     const presence = new EstPresent(req.body);
 
     presence.save()

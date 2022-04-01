@@ -116,8 +116,9 @@
                         // Bouton
                         let idPratique = myPratiques.pratique[i]._id;
                         var cellSuppSport = document.createElement('input');
-                        cellSuppSport.type = "button"
-                        cellSuppSport.value = "Supprimer cette pratique"
+                        cellSuppSport.type = "button";
+                        cellSuppSport.value = "Supprimer cette pratique";
+                        cellSuppSport.classList.add("butt");
                         cellSuppSport.addEventListener('click', function(){
                             supprimerPratique(idPratique);
                         });
@@ -208,8 +209,9 @@
                     // Bouton
                     let idSportFct = allSport.sports[i]._id;
                     var cellAjoutSport = document.createElement('input');
-                    cellAjoutSport.type = "button"
-                    cellAjoutSport.value = "Ajouter ce sport à mes pratiques"
+                    cellAjoutSport.type = "button";
+                    cellAjoutSport.value = "Ajouter ce sport à mes pratiques";
+                    cellAjoutSport.classList.add("butt");
                     cellAjoutSport.addEventListener('click', function(){
                         ajouterPratique(idSportFct);
                     });

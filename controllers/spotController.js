@@ -3,10 +3,9 @@ const jwtUtils = require('../utils/jwt.utils');
 
 exports.createSpot = (req, res) => {
     const headerAuth = req.headers['authorization'];
-    const userId = jwtUtils.getId(headerAuth);
-    
-    if (userId < 0) {
-        return res.status(401).json({ 'erreur': 'Bad token'});
+    const admin = jwtUtils.getAdmin(headerAuth);
+    if (!admin) {
+        return res.status(401).json({ 'error': 'Bad token'});
     }
     const spot = new Spot(req.body);
 
