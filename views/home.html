@@ -143,6 +143,9 @@
             if (repUser.ok) {
                 console.log("update");
                 window.location.href="/home.html";
+            }else {
+                alerte("Un problème est survenu, vérifier que votre mot de passe corresponde au regex et réessayez");
+                window.location.href="/home.html";
             }
         };
         
@@ -350,6 +353,9 @@
                 <br/>
                 <label for="mdp">Votre mot de passe :</label>
                 <label class="obligation" >*obligatoire</label>
+                <br/>
+                <label class="obligation" >Votre mot de passe doit comporter au moins une minuscule, une majuscule, un chiffre et entre 8 et 20 charactères</label>
+                <br/>
                 <input type="password" name="mdp" id="mdp" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$" title="Mot de passe non valide, il doit comporter au moins une minuscule, une majuscule, un chiffre et entre 8 et 20 charactères." required="required"/>
                 <br/>
                 <button id="modifierUser" class="butt">Modifier</button>
