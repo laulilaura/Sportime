@@ -233,7 +233,7 @@ body {
   -moz-box-shadow: 22px 24px 53px 0px rgba(0,0,0,0.31);
     position: relative;
     top: -100px;
-    z-index: -1;
+    /*z-index: -1;*/
 }
 
 #profil h1, #team h1, #toutesTeam h1, #mesSports h1, #lesSports h1, #entrainementsProp h1,

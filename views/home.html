@@ -191,12 +191,15 @@
                     // Récupère mon élément et ajoute si une team ses caractéristique
                     let repTeam = await fetch("/api/team/"+myIdTeam, {
                         method: "GET",
-                        headers: {'Content-Type': 'application/json'}
+                        headers: {'Content-Type': 'application/json',
+                        'authorization': localStorage.getItem('token')
+                    }
                     });
                     // Récupère mon user
                     let myTeamInfo =  await repTeam.json()
 
                     let maDateCrea = new Date(myTeamInfo.team.dateCreation); // Mise au format lisible
+
                     document.getElementById("maTeamAMoi").insertAdjacentHTML("afterend",
                     "<table><thead><tr><th>Nom de Team</th><th>Description</th><th>Date de création</th></tr></thead><tbody><tr id=\"maTeamTr\"><td>"+myTeamInfo.team.nomTeam+"</td><td>"+myTeamInfo.team.Description+"</td><td>"+maDateCrea.toLocaleDateString('fr-CA')+"</td></tr></tbody></table>");
                     document.getElementById("maTeamTr").insertAdjacentHTML("afterend",

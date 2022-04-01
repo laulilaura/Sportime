@@ -27,6 +27,7 @@ exports.getOneTeamById = (req, res) => {
     if (userId < 0) {
         return res.status(401).json({ 'erreur': 'Bad token'});
     }
+    
     const idTeam = req.params.idTeam;
 
     Team.findOne({_id: idTeam})
