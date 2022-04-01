@@ -117,7 +117,7 @@
             window.location.href="/index.html";
         };
 
-//////////////////////////////////////////////////////  TEAM  //////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////  AFFICHER  //////////////////////////////////////////////////////////
 
         //////////////////////////// RECUPERER LE OU LES TEAM SI IL Y EN A
         async function recupAllTeam(){
@@ -145,7 +145,7 @@
                 var thDesc = document.createElement("th");
                 var thDate = document.createElement("th");
                 
-                var cellNom = document.createTextNode("Sport");
+                var cellNom = document.createTextNode("Team");
                 var cellDesc = document.createTextNode("Description");
                 var cellDate = document.createTextNode("Date de création");
                 
@@ -200,6 +200,168 @@
         }
         recupAllTeam();
 
+        //////////////////////////// RECUPERER LE OU LES SPORTS SI IL Y EN A
+        async function recupAllSport(){
+            let repAllSport = await fetch("/api/sport/", {
+                method: "GET",
+                headers: {
+                    'content-type': 'application/json',
+                    'authorization': localStorage.getItem('token'),
+                }
+            });
+            if (repAllSport.ok){
+                // Récupère les sports
+                let allSport =  await repAllSport.json();
+                let nbSport = allSport.sports.length;
+
+                var bodyAll = document.getElementById("tabAllSports");
+                // Création d'un <table> element et d'un <tbody> element
+                var tblAll = document.createElement("table");
+                
+                var tblTHeadAll = document.createElement("thead");
+
+                var trAll = document.createElement("tr");
+
+                var thNom = document.createElement("th");
+                var thDesc = document.createElement("th");
+                var thCate = document.createElement("th");
+                
+                var cellNom = document.createTextNode("Sport");
+                var cellDesc = document.createTextNode("Description");
+                var cellCate = document.createTextNode("Categorie");
+                
+                thNom.appendChild(cellNom);
+                thDesc.appendChild(cellDesc);
+                thCate.appendChild(cellCate);
+
+                trAll.appendChild(thNom);
+                trAll.appendChild(thDesc);
+                trAll.appendChild(thCate);
+                
+                tblTHeadAll.appendChild(trAll);
+
+                tblAll.appendChild(tblTHeadAll);
+
+                var tblBodyAll = document.createElement("tbody");
+
+                // création de ligne
+                for (var i = 0; i < nbSport; i++) {
+                    // creation d'une ligne du tableau
+                    var rowAll = document.createElement("tr");
+
+                    // création des colones
+                    var nomSportAll = document.createElement("td");
+                    var descriptionAll = document.createElement("td");
+                    var categorieAll = document.createElement("td");
+
+                    var cellnomSportAll = document.createTextNode(allSport.sports[i].nomSport);
+                    var celldescriptionAll = document.createTextNode(allSport.sports[i].description);
+                    var cellcateAll = document.createTextNode(allSport.sports[i].categorie);
+
+                    nomSportAll.appendChild(cellnomSportAll);
+                    descriptionAll.appendChild(celldescriptionAll);
+                    categorieAll.appendChild(cellcateAll);
+
+                    rowAll.appendChild(nomSportAll);
+                    rowAll.appendChild(descriptionAll);
+                    rowAll.appendChild(categorieAll);
+
+                    // ajout de la ligne au tableau
+                    tblBodyAll.appendChild(rowAll);
+                }
+
+                // put the <tbody> in the <table>
+                tblAll.appendChild(tblBodyAll);
+                tblAll.setAttribute("border", "1");
+                // appends <table> into <body>
+                bodyAll.appendChild(tblAll);
+            }
+            
+        }
+        recupAllSport();
+
+        //////////////////////////// RECUPERER LE OU LES SPORTS SI IL Y EN A
+        async function recupAllSpot(){
+            let repAllSpot = await fetch("/api/spot/", {
+                method: "GET",
+                headers: {
+                    'content-type': 'application/json',
+                    'authorization': localStorage.getItem('token'),
+                }
+            });
+            if (repAllSpot.ok){
+                // Récupère les sports
+                let allSpot =  await repAllSpot.json();
+                let nbSpot = allSpot.spots.length;
+
+                var bodyAll = document.getElementById("tabAllSpots");
+                // Création d'un <table> element et d'un <tbody> element
+                var tblAll = document.createElement("table");
+                
+                var tblTHeadAll = document.createElement("thead");
+
+                var trAll = document.createElement("tr");
+
+                var thNom = document.createElement("th");
+                var thVille = document.createElement("th");
+                var thAdresse = document.createElement("th");
+                
+                var cellNom = document.createTextNode("Spot");
+                var cellVille = document.createTextNode("Ville");
+                var cellAdresse = document.createTextNode("Adresse");
+                
+                thNom.appendChild(cellNom);
+                thVille.appendChild(cellVille);
+                thAdresse.appendChild(cellAdresse);
+
+                trAll.appendChild(thNom);
+                trAll.appendChild(thVille);
+                trAll.appendChild(thAdresse);
+                
+                tblTHeadAll.appendChild(trAll);
+
+                tblAll.appendChild(tblTHeadAll);
+
+                var tblBodyAll = document.createElement("tbody");
+
+                // création de ligne
+                for (var i = 0; i < nbSpot; i++) {
+                    // creation d'une ligne du tableau
+                    var rowAll = document.createElement("tr");
+
+                    // création des colones
+                    var nomSpotAll = document.createElement("td");
+                    var villeAll = document.createElement("td");
+                    var adresseAll = document.createElement("td");
+
+                    var cellnomSpotAll = document.createTextNode(allSpot.spots[i].nomSpot);
+                    var cellvilleAll = document.createTextNode(allSpot.spots[i].ville);
+                    var celladresseAll = document.createTextNode(allSpot.spots[i].adresse);
+
+                    nomSpotAll.appendChild(cellnomSpotAll);
+                    villeAll.appendChild(cellvilleAll);
+                    adresseAll.appendChild(celladresseAll);
+
+                    rowAll.appendChild(nomSpotAll);
+                    rowAll.appendChild(villeAll);
+                    rowAll.appendChild(adresseAll);
+
+                    // ajout de la ligne au tableau
+                    tblBodyAll.appendChild(rowAll);
+                }
+
+                // put the <tbody> in the <table>
+                tblAll.appendChild(tblBodyAll);
+                tblAll.setAttribute("border", "1");
+                // appends <table> into <body>
+                bodyAll.appendChild(tblAll);
+            }
+            
+        }
+        recupAllSpot();
+
+//////////////////////////////////////////////////////  CREER  //////////////////////////////////////////////////////////
+
         //////////////////////////// CREER TEAM
         async function createTeam(){
             let data = {nomTeam: document.getElementById("nomTeamCreate").value,
@@ -220,25 +382,50 @@
                 alert("Un problème est survenu lors de la création de la team")
             }
         };
-/*
-        //////////////////////////// SUPPRIMER TEAM
-        async function suppTeam(){
-            let data = {team: null};
-            let repUser = await fetch("/api/utilisateur/team/"+monId, {
-                method: "PUT",
+
+        //////////////////////////// CREER SPORT
+        async function createSport(){
+            let data = {nomSport: document.getElementById("nomSportCreate").value,
+                    categorie: document.getElementById("cateSportCreate-select").value,
+                    description: document.getElementById("descriptionSportCreate").value
+            }
+            let repSport = await fetch("/api/sport", {
+                method: "POST",
                 headers: {
                     'content-type': 'application/json',
                     'authorization': localStorage.getItem('token')
                 },
                 body: JSON.stringify(data)
             });
-            if (repUser.ok) {
-                console.log("supp team");
-                window.location.href="/home.html";
+            if (repSport.ok) {
+                console.log("sport créé");
+                window.location.href="/adminPage.html";
             } else {
-                alert("Un problème est survenu lors de la suppression")
+                alert("Un problème est survenu lors de la création de ce sport")
             }
-        };*/
+        };
+
+        //////////////////////////// CREER SPOT
+        async function createSpot(){
+            let data = {nomSpot: document.getElementById("nomSpotCreate").value,
+                    ville: document.getElementById("villeSpotCreate").value,
+                    adresse: document.getElementById("adresseSpotCreate").value
+            }
+            let repSport = await fetch("/api/spot", {
+                method: "POST",
+                headers: {
+                    'content-type': 'application/json',
+                    'authorization': localStorage.getItem('token')
+                },
+                body: JSON.stringify(data)
+            });
+            if (repSport.ok) {
+                console.log("spot créé");
+                window.location.href="/adminPage.html";
+            } else {
+                alert("Un problème est survenu lors de la création de ce spot")
+            }
+        };
 
     </script>
 </head>
@@ -326,14 +513,55 @@
         <div id="tabAllTeams"></div>
     </div>
     
-    
-    <!-- ENTRAINEMENT -->
-    <!--
-    <div id="divEntrainements">
-        <h1>Mes entrainements</h1>
-        <a href="/entrainement.html" id="entrainements">S'entrainer !</a>
+    <!-- SPORT -->
+    <div id="sport">
+        <h1 id="monSportAMoi">Ajouter un Sport</h1>
+        <div id="divAjoutSport">
+            <form action="javascript:createSport()">
+                <label for="nomSportCreate">Nom du sport :</label>
+                <input type="text" name="nomSportCreate" id="nomSportCreate" required="required"/>
+                <br/>
+                <label for="cateSportCreate">Categorie :</label>
+                <select name="cateSportCreate" id="cateSportCreate-select">
+                    <option value="equipe">Sport d'équipe</option>
+                    <option value="solo">Sport solo</option>
+                </select>
+                <br>
+                <label for="descriptionSportCreate">Description :</label>
+                <input type="text" name="descriptionSportCreate" id="descriptionSportCreate" required="required"/>
+                <input type="submit" value="Créer ce sport">
+              </form>
+        </div>
     </div>
-    -->
+
+    <div id="tousSport">
+        <h1>Tous les sports</h1>
+        <div id="tabAllSports"></div>
+    </div>
+
+    <!-- SPOT -->
+    <div id="spot">
+        <h1 id="monSportAMoi">Ajouter un Spot</h1>
+        <div id="divAjoutSpot">
+            <form action="javascript:createSpot()">
+                <label for="nomSpotCreate">Nom du spot :</label>
+                <input type="text" name="nomSpotCreate" id="nomSpotCreate" required="required"/>
+                <br/>
+                <label for="villeSpotCreate">Ville :</label>
+                <input type="text" name="villeSpotCreate" id="villeSpotCreate" required="required"/>
+                <br>
+                <label for="adresseSpotCreate">Adresse :</label>
+                <input type="text" name="adresseSpotCreate" id="adresseSpotCreate" required="required"/>
+                <input type="submit" value="Créer ce spot">
+              </form>
+        </div>
+    </div>
+
+    <div id="tousSpot">
+        <h1>Tous les spots</h1>
+        <div id="tabAllSpots"></div>
+    </div>
+
 
     <!-- FOOTER -->
     <footer class="footer">

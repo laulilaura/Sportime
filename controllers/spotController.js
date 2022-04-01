@@ -1,4 +1,5 @@
 const Spot = require('../models/spotModel');
+const jwtUtils = require('../utils/jwt.utils');
 
 exports.createSpot = (req, res) => {
     const headerAuth = req.headers['authorization'];
@@ -22,6 +23,7 @@ exports.getAllSpot = (req, res) => {
     if (userId < 0) {
         return res.status(401).json({ 'error': 'Bad token'});
     }
+    console.log(userId)
     Spot.find()
     .then((spots) => { return res.status(200).json({spots})})
     .catch((error) => { return res.status(400).json({error})});

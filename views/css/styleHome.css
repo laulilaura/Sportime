@@ -191,7 +191,7 @@ body {
     /*z-index: 1;*/
 }
 
-#team, #toutesTeam, #mesSports, #lesSports, #connexion, #inscription {
+#toutesTeam, #mesSports, #lesSports, #connexion, #inscription, #tousSport, #tousSpot{
   margin: 40px auto 0 auto;
   padding: 40px 40px 60px 40px;
   width: 60%;
@@ -219,10 +219,25 @@ body {
     position: relative;
     top: -100px;
     z-index: -1;
-  }
+}
+
+#sport, #spot, #team {
+  margin: 40px auto 0 auto;
+    padding: 40px 40px 60px 40px;
+    width: 40%;
+    /* border: solid 2px red; */
+    border-radius: 50px;
+    background-color: white;
+    box-shadow: 22px 24px 53px 0px rgba(0,0,0,0.31);
+  -webkit-box-shadow: 22px 24px 53px 0px rgba(0,0,0,0.31);
+  -moz-box-shadow: 22px 24px 53px 0px rgba(0,0,0,0.31);
+    position: relative;
+    top: -100px;
+    z-index: -1;
+}
 
 #profil h1, #team h1, #toutesTeam h1, #mesSports h1, #lesSports h1, #entrainementsProp h1,
-#connexion h1, #inscription h1{
+#connexion h1, #inscription h1, #sport h1, #tousSport h1, #spot h1, #tousSpot h1{
     text-align: center;
     text-transform: uppercase;
     font-family: 'Bebas Neue', cursive;
