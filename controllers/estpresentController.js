@@ -1,4 +1,5 @@
 const EstPresent = require('../models/estpresentModel');
+const jwtUtils = require('../utils/jwt.utils');
 
 exports.createPresence = (req, res) => {
     const presence = new EstPresent(req.body);

@@ -191,7 +191,7 @@ body {
     /*z-index: 1;*/
 }
 
-#toutesTeam, #mesSports, #lesSports, #connexion, #inscription, #tousSport, #tousSpot{
+#toutesTeam, #mesSports, #lesSports, #connexion, #inscription, #tousSport, #tousSpot, #tousUser{
   margin: 40px auto 0 auto;
   padding: 40px 40px 60px 40px;
   width: 60%;
@@ -237,7 +237,7 @@ body {
 }
 
 #profil h1, #team h1, #toutesTeam h1, #mesSports h1, #lesSports h1, #entrainementsProp h1,
-#connexion h1, #inscription h1, #sport h1, #tousSport h1, #spot h1, #tousSpot h1{
+#connexion h1, #inscription h1, #sport h1, #tousSport h1, #spot h1, #tousSpot h1, #tousUser h1{
     text-align: center;
     text-transform: uppercase;
     font-family: 'Bebas Neue', cursive;

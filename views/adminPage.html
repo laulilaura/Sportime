@@ -360,6 +360,140 @@
         }
         recupAllSpot();
 
+        //////////////////////////// RECUPERER LE OU LES SPORTS SI IL Y EN A
+        async function recupAllUser(){
+            let repAllUser = await fetch("/api/utilisateur/", {
+                method: "GET",
+                headers: {
+                    'content-type': 'application/json',
+                    'authorization': localStorage.getItem('token'),
+                }
+            });
+            if (repAllUser.ok){
+                // Récupère les sports
+                let allUser =  await repAllUser.json();
+                let nbUser = allUser.users.length;
+
+                var bodyAll = document.getElementById("tabAllUsers");
+                // Création d'un <table> element et d'un <tbody> element
+                var tblAll = document.createElement("table");
+                
+                var tblTHeadAll = document.createElement("thead");
+
+                var trAll = document.createElement("tr");
+
+                var thUsername = document.createElement("th");
+                var thNom = document.createElement("th");
+                var thPrenom = document.createElement("th");
+                var thVille = document.createElement("th");
+                var thTel = document.createElement("th");
+                var thDate = document.createElement("th");
+                var thTeam = document.createElement("th");
+                
+                var cellUsername = document.createTextNode("Username");
+                var cellNom = document.createTextNode("Nom");
+                var cellPrenom = document.createTextNode("Prénom");
+                var cellVille = document.createTextNode("Ville");
+                var cellTel = document.createTextNode("Téléphone");
+                var cellDate = document.createTextNode("Date de naissance");
+                var cellTeam = document.createTextNode("Team");
+                
+                thUsername.appendChild(cellUsername);
+                thNom.appendChild(cellNom);
+                thPrenom.appendChild(cellPrenom);
+                thVille.appendChild(cellVille);
+                thTel.appendChild(cellTel);
+                thDate.appendChild(cellDate);
+                thTeam.appendChild(cellTeam);
+
+                trAll.appendChild(thUsername);
+                trAll.appendChild(thNom);
+                trAll.appendChild(thPrenom);
+                trAll.appendChild(thVille);
+                trAll.appendChild(thTel);
+                trAll.appendChild(thDate);
+                trAll.appendChild(thTeam);
+                
+                tblTHeadAll.appendChild(trAll);
+
+                tblAll.appendChild(tblTHeadAll);
+
+                var tblBodyAll = document.createElement("tbody");
+
+                // création de ligne
+                for (var i = 0; i < nbUser; i++) {
+                    // creation d'une ligne du tableau
+                    var rowAll = document.createElement("tr");
+
+                    // création des colones
+                    var tdUsername = document.createElement("td");
+                    var tdNom = document.createElement("td");
+                    var tdPrenom = document.createElement("td");
+                    var tdVille = document.createElement("td");
+                    var tdTel = document.createElement("td");
+                    var tdDate = document.createElement("td");
+                    var tdTeam = document.createElement("td");
+
+                    // RECUPERER TEAM A PARTIR D'UN FETCH SUR L'ID
+                    let repTeam = await fetch("/api/team/"+allUser.users[i].team, {
+                      method: "GET",
+                      headers: {
+                          'content-type': 'application/json',
+                          'authorization': localStorage.getItem('token'),
+                      }
+                    });
+                    if(repTeam.ok){
+                      let myTeam =  await repTeam.json()
+                      var cellMyTeam = document.createTextNode(myTeam.team.nomTeam);
+                    }else {
+                      var cellMyTeam = document.createTextNode(allUser.users[i].team);
+                    }
+                    
+                    if(cellMyTeam==null || cellMyTeam==undefined){
+                        var cellTeam = document.createTextNode("");
+                    }else {
+                        var cellTeam = cellMyTeam;
+                    }
+                    
+                    var cellUsername = document.createTextNode(allUser.users[i].username);
+                    var cellNom = document.createTextNode(allUser.users[i].nom);
+                    var cellPrenom = document.createTextNode(allUser.users[i].prenom);
+                    var cellVille = document.createTextNode(allUser.users[i].ville_fav);
+                    var cellTel = document.createTextNode(allUser.users[i].tel);
+                    let maDate = new Date(allUser.users[i].dateNaissance);
+                    var cellDate = document.createTextNode(maDate.toLocaleDateString('fr-CA'));
+                    
+
+                    tdUsername.appendChild(cellUsername);
+                    tdNom.appendChild(cellNom);
+                    tdPrenom.appendChild(cellPrenom);
+                    tdVille.appendChild(cellVille);
+                    tdTel.appendChild(cellTel);
+                    tdDate.appendChild(cellDate);
+                    tdTeam.appendChild(cellTeam);
+
+                    rowAll.appendChild(tdUsername);
+                    rowAll.appendChild(tdNom);
+                    rowAll.appendChild(tdPrenom);
+                    rowAll.appendChild(tdVille);
+                    rowAll.appendChild(tdTel);
+                    rowAll.appendChild(tdDate);
+                    rowAll.appendChild(tdTeam);
+
+                    // ajout de la ligne au tableau
+                    tblBodyAll.appendChild(rowAll);
+                }
+
+                // put the <tbody> in the <table>
+                tblAll.appendChild(tblBodyAll);
+                tblAll.setAttribute("border", "1");
+                // appends <table> into <body>
+                bodyAll.appendChild(tblAll);
+            }
+            
+        }
+        recupAllUser();
+
 //////////////////////////////////////////////////////  CREER  //////////////////////////////////////////////////////////
 
         //////////////////////////// CREER TEAM
@@ -562,6 +696,12 @@
         <div id="tabAllSpots"></div>
     </div>
 
+    <!-- UTILISATEURS -->
+    
+    <div id="tousUser">
+        <h1>Tous les utilisateurs</h1>
+        <div id="tabAllUsers"></div>
+    </div>
 
     <!-- FOOTER -->
     <footer class="footer">

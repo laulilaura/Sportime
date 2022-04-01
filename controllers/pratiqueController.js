@@ -1,4 +1,5 @@
 const Pratique = require('../models/pratiqueModel');
+const jwtUtils = require('../utils/jwt.utils');
 
 exports.createPratique = (req, res) => {
     const headerAuth = req.headers['authorization'];
