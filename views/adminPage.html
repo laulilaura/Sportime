@@ -24,19 +24,16 @@
 
             document.getElementById('openBtnModif').addEventListener('click', function() {
                 dialogModif.setAttribute('open', true);
-                console.log("dialog ouvert");
             })
 
             document.getElementById('closeBtnModif').addEventListener('click', function() {
                 dialogModif.removeAttribute('open');
-                console.log("dialog fermé");
             });
 
             document.getElementById('modifierUser').addEventListener('click', function() {
                 updateUser();
                 dialogModif.removeAttribute('open');
                 recupUserInfo();
-                console.log("dialog fermé");
             });
 
         
@@ -162,7 +159,6 @@
                 
                 tblTHeadAll.appendChild(trAll);
 
-                console.log(tblTHeadAll);
                 tblAll.appendChild(tblTHeadAll);
 
                 var tblBodyAll = document.createElement("tbody");

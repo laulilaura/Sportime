@@ -24,19 +24,16 @@
 
             document.getElementById('openBtnModif').addEventListener('click', function() {
                 dialogModif.setAttribute('open', true);
-                console.log("dialog ouvert");
             })
 
             document.getElementById('closeBtnModif').addEventListener('click', function() {
                 dialogModif.removeAttribute('open');
-                console.log("dialog fermé");
             });
 
             document.getElementById('modifierUser').addEventListener('click', function() {
                 updateUser();
                 dialogModif.removeAttribute('open');
                 recupUserInfo();
-                console.log("dialog fermé");
             });
 
             // bouttons SUPPRIMER USER
@@ -44,12 +41,10 @@
 
             document.getElementById('openBtnSup').addEventListener('click', function() {
                 dialogSup.setAttribute('open', true);
-                console.log("dialog ouvert");
             })
 
             document.getElementById('closeBtnSup').addEventListener('click', function() {
                 dialogSup.removeAttribute('open');
-                console.log("dialog fermé");
             });
 
             document.getElementById('supprimerUser').addEventListener('click', deleteUser);
