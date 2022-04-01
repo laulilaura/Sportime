@@ -4,13 +4,25 @@
     <meta charset="UTF-8">
     <title>Inscription - Sportime</title>
     <link rel="icon" href="img/logo.ico">
-    <link href="css/styleForm.css" rel="stylesheet">
+    <link href="css/styleHome.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com/%22%3E%22%3E">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 
 <body>
+  <!-- HEADER -->
+  <header class="header">
+    <ul id="ulHeader">
+        <li><a href="index.html">Retour</a></li>
+        <li class="liHead liHeadImg"><a href="/index.html"><img src="img/Sportime_logo_white.png" alt="Logo Sportime blanc"></a></li>
+    </ul>
+  </header>
+  <div class="imgTitleVideForm"></div>
     <!-- BODY -->
     <div id="inscription">
       <form action="javascript:inscription()">
+        <h1>Inscription</h1>
         <label for="username">Votre nom d'utilisateur :</label>
         <input type="text" name="username" id="username" required="required"/>
         <br/>
@@ -37,15 +49,14 @@
     </div>
   
       <!-- FOOTER -->
-      <footer class="footer">
-        <ul id="ulFooter">
+    <footer class="footer">
+      <ul id="ulFooter">
           <li class="liBot"><a href="/aPropos.html">À propos</a></li>
           <li class="liBot"><a href="/politique.html">Politique de confidentialité</a></li>
           <li class="liBot"><a href="/session.html">Session</a></li>
           <li class="liBot"><a href="#reseaux">Réseaux sociaux</a></li>
-        </ul>
-      </footer>
-    </div> 
+      </ul>
+  </footer>
 
 <!--Js -->
     <script>

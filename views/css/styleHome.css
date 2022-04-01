@@ -5,17 +5,17 @@
 
 #ulHeader {
     list-style-type: none;
-  margin: 0;
-  margin-left: -8px;
-  padding: 10px 20px 10px 0px;
-  background-color: rgb(19, 19, 19);
+    margin: 0;
+    margin-left: -8px;
+    padding: 10px 20px 10px 0px;
+    background-color: rgb(19, 19, 19);
   /* position: fixed; */
-  top: 0;
-  width: 100%;
-  height: auto;
-  text-align: right;
-  position: fixed;
-  z-index: 10;
+    top: 0;
+    width: 100%;
+    height: auto;
+    text-align: right;
+    position: fixed;
+    z-index: 10;
 }
   
 ul {
@@ -52,14 +52,14 @@ ul {
     background-color: #eb333f;
   }
 
-  #Déconnexion {
-      color: white;
-      padding: 20px 16px;
-      margin-left: 20px;
-      background-color: transparent;
-      border: solid 1px white;
-      border-radius: 5px;
-      font-size: 16px;
+#Déconnexion {
+    color: white;
+    padding: 20px 16px;
+    margin-left: 20px;
+    background-color: transparent;
+    border: solid 1px white;
+    border-radius: 5px;
+    font-size: 16px;
 
 }
 
@@ -188,10 +188,10 @@ body {
 -moz-box-shadow: 22px 24px 53px 0px rgba(0,0,0,0.31);
     position: relative;
     top: -100px;
-    z-index: 1;
+    /*z-index: 1;*/
 }
 
-#team, #toutesTeam, #mesSports, #lesSports {
+#team, #toutesTeam, #mesSports, #lesSports, #connexion, #inscription {
   margin: 40px auto 0 auto;
   padding: 40px 40px 60px 40px;
   width: 60%;
@@ -203,7 +203,7 @@ body {
 -moz-box-shadow: 22px 24px 53px 0px rgba(0,0,0,0.31);
   position: relative;
   top: -100px;
-  z-index: -1;
+  /*z-index: -1;*/
 }
 
 #entrainementsProp {
@@ -221,8 +221,9 @@ body {
     z-index: -1;
   }
 
-#profil h1, #team h1, #toutesTeam h1, #mesSports h1, #lesSports h1, #entrainementsProp h1{
-  text-align: center;
+#profil h1, #team h1, #toutesTeam h1, #mesSports h1, #lesSports h1, #entrainementsProp h1,
+#connexion h1, #inscription h1{
+    text-align: center;
     text-transform: uppercase;
     font-family: 'Bebas Neue', cursive;
     font-size: 50px;
@@ -260,8 +261,28 @@ body {
     background-position: center;
     position: relative;
 }
+.imgTitleVideForm {
+    margin: 160px auto 0 auto;
+    height: 100px;
+    width: 60%;
+    border-radius: 50px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
 
 #dialogModif {
   z-index: 11;
 }
 
+#connexion, #inscription {
+    text-align: center;
+}
+
+#buttconnexionAdmin {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 17px;
+    margin-top: 0;
+    color: #555;
+    text-align: center;
+}
