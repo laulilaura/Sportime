@@ -3,6 +3,9 @@ const bcrypt = require('bcrypt');
 const jwtUtils = require('../utils/jwt.utils');
 const TEL_REGEX = /^(\+33|0)[1-9](\d\d){4}$/;
 const MDP_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
+
+//const crypto=require("crypto-js");
+//var key = "tgdYFfd68@1frd11";
 	
 
 
@@ -65,7 +68,9 @@ exports.createUser = (req, res) => {
 
 exports.loginUser = (req, res) => {
     const username = req.body.username; 
-    const mdp = req.body.mdp; 
+    const mdp = req.body.mdp;
+    //var decrypted = crypto.AES.decrypt(mdp, key).toString(crypto.enc.Utf8)
+
     if (username == null || mdp == null) {  
         return res.status (400).json({ 'erreur': 'paramètre manquant' });
     }
@@ -107,8 +112,6 @@ exports.loginAdmin = (req, res) => {
         if (userFound) {
             bcrypt.compare(mdp, userFound.mdp, function(errBycrypt, resBycrypt) {
                 if(resBycrypt) {
-                    console.log(userFound);
-                    console.log(userFound.estAdmin);
                     if(userFound.estAdmin==true){
                         return res.status (200).json({
                             '_id': userFound.id,
