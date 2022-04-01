@@ -15,12 +15,18 @@
 </html>
 
 <script>
-     window.onload=function(){
+    window.onload=function(){
         let monId = localStorage.getItem("id");
+        let admin = localStorage.getItem("admin");
         
         if(monId != null){
             let a = document.getElementById("retourSite");
-            a.href ="/home.html";
+            if(admin){
+                a.href ="/adminPage.html";
+            } else {
+                a.href ="/home.html";
+            }
+            
         }else {
             let a = document.getElementById("retourSite");
             a.href ="/index.html";

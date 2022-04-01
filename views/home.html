@@ -8,6 +8,9 @@
     <title>Home page</title>
     <link rel="icon" href="img/logo.ico">
     <link href="css/styleHome.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com/%22%3E%22%3E">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <script >
         //////////////////////////// Get Storage
         let monId = localStorage.getItem("id");
@@ -302,13 +305,15 @@
     <!-- HEADER -->
     <header class="header">
         <ul id="ulHeader">
-            <li><a>Acceuil</a></li>
+            <li><input id="Déconnexion" type="button" value="Déconnexion" onclick="logoutUser();"/></li>
+            <li><a href="./sport.html">Sports</a></li>
             <li><a href="/entrainement.html">Entrainements</a></li>
-            <li><a href="/sport.html">Sports</a></li>
-            <li><input id="Deconnexion" type="button" value="Déconnexion" onclick="logoutUser();"/></li>
+            <li><a>Acceuil</a></li>
+            <li class="liHead liHeadImg"><a href="/index.html"><img src="img/Sportime_logo_white.png" alt="Logo Sportime blanc"></a></li>
         </ul>
     </header>
-    </div> 
+
+    <div class="imgTitle"></div>
 
     <!-- PROFIL -->
     <div id="profil">
@@ -386,13 +391,12 @@
     <!-- FOOTER -->
     <footer class="footer">
         <ul id="ulFooter">
-          <li class="liBot"><a href="/aPropos.html">À propos</a></li>
-          <li class="liBot"><a href="/politique.html">Politique de confidentialité</a></li>
-          <li class="liBot"><a href="/session.html">Session</a></li>
-          <li class="liBot"><a href="#reseaux">Réseaux sociaux</a></li>
+            <li class="liBot"><a href="/aPropos.html">À propos</a></li>
+            <li class="liBot"><a href="/politique.html">Politique de confidentialité</a></li>
+            <li class="liBot"><a href="/session.html">Session</a></li>
+            <li class="liBot"><a href="#reseaux">Réseaux sociaux</a></li>
         </ul>
-      </footer>
-    </div> 
+    </footer>
 </body>
 
 </html>

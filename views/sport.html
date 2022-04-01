@@ -4,13 +4,28 @@
     <meta charset="UTF-8">
     <title>Sports - Sportime</title>
     <link rel="icon" href="img/logo.ico">
-    <link href="css/sport.css" rel="stylesheet">
+    <link href="css/styleHome.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com/%22%3E%22%3E">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 
     <script>
+
         //////////////////////////// Get Storage
         let monId = localStorage.getItem("id");
         let monToken = localStorage.getItem("token");
+        let admin = localStorage.getItem("admin");
 
+
+        /////////////////////////// ON LOAD
+        window.onload=function(){
+            if(admin){
+                document.getElementById("pagePincipale").href ="/adminPage.html";
+            }else {
+                document.getElementById("pagePincipale").href ="/home.html";
+            }
+        }
+        
         //////////////////////////// FONCTION DECONNEXION 
         async function logoutUser(){            
             localStorage.removeItem("id");
@@ -276,13 +291,15 @@
     <!-- HEADER -->
     <header class="header">
         <ul id="ulHeader">
-            <li><a href="/home.html">Acceuil</a></li>
-            <li><a href="/entrainement.html">Entrainements</a></li>
+            <li><input id="Déconnexion" type="button" value="Déconnexion" onclick="logoutUser();"/></li>
             <li><a>Sports</a></li>
-            <li><input id="Deconnexion" type="button" value="Déconnexion" onclick="logoutUser();"/></li>
+            <li><a href="/entrainement.html">Entrainements</a></li>
+            <li><a id="pagePincipale" href="">Acceuil</a></li>
+            <li class="liHead liHeadImg"><a href="/index.html"><img src="img/Sportime_logo_white.png" alt="Logo Sportime blanc"></a></li>
         </ul>
-      </footer>
-    </div> 
+    </header>
+
+    <div class="imgTitleVide"></div>
 
     <!-- MES SPORTS -->
     <div id="mesSports">
@@ -299,10 +316,10 @@
     <!-- FOOTER -->
     <footer class="footer">
         <ul id="ulFooter">
-          <li class="liBot"><a href="/aPropos.html">À propos</a></li>
-          <li class="liBot"><a href="/politique.html">Politique de confidentialité</a></li>
-          <li class="liBot"><a href="/session.html">Session</a></li>
-          <li class="liBot"><a href="#reseaux">Réseaux sociaux</a></li>
+            <li class="liBot"><a href="/aPropos.html">À propos</a></li>
+            <li class="liBot"><a href="/politique.html">Politique de confidentialité</a></li>
+            <li class="liBot"><a href="/session.html">Session</a></li>
+            <li class="liBot"><a href="#reseaux">Réseaux sociaux</a></li>
         </ul>
     </footer>
 </body>

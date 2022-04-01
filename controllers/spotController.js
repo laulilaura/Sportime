@@ -11,7 +11,11 @@ exports.createSpot = (req, res) => {
 }
 
 exports.getAllSpot = (req, res) => {
-
+    const headerAuth = req.headers['authorization'];
+    const userId = jwtUtils.getId(headerAuth);
+    if (userId < 0) {
+        return res.status(401).json({ 'error': 'Bad token'});
+    }
     Spot.find()
     .then((spots) => { return res.status(200).json({spots})})
     .catch((error) => { return res.status(400).json({error})});

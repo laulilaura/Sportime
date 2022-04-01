@@ -4,12 +4,25 @@
     <meta charset="UTF-8">
     <title>Entrainements - Sportime</title>
     <link rel="icon" href="img/logo.ico">
-    <link href="css/entrainement.css" rel="stylesheet">
+    <link href="css/styleHome.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com/%22%3E%22%3E">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 
     <script>
       //////////////////////////// Get Storage
       let monId = localStorage.getItem("id");
       let monToken = localStorage.getItem("token");
+      let myadmin = localStorage.getItem("admin");
+
+      /////////////////////////// ON LOAD
+      window.onload=function(){
+          if(myadmin){
+              document.getElementById("pagePincipale").href ="/adminPage.html";
+          }else {
+              document.getElementById("pagePincipale").href ="/home.html";
+          }
+      }
 
       //////////////////////////// FONCTION DECONNEXION 
       async function logoutUser(){            
@@ -101,7 +114,7 @@
                       let mySport =  await repNomSport.json()
                       var cellSport = document.createTextNode(mySport.sport.nomSport);
                     }else {
-                      var cellSport = document.createTextNode(myPratiques.pratique[i].idSport);
+                      var cellSport = document.createTextNode(allPresences.presences[i].idSport);
                     }
 
                     // RECUPERER USERNAM A PARTIR D'UN FETCH SUR L'ID
@@ -116,7 +129,7 @@
                       let myUser =  await repUsername.json()
                       var cellUser = document.createTextNode(myUser.user.username);
                     }else {
-                      var cellUser = document.createTextNode(myPratiques.pratique[i].idUser);
+                      var cellUser = document.createTextNode(allPresences.presences[i].idUser);
                     }
 
                     // RECUPERER LE SPOT A PARTIR D'UN FETCH SUR L'ID
@@ -131,7 +144,7 @@
                       let mySpot =  await repSpot.json()
                       var cellSpot = document.createTextNode(mySpot.spot.nomSpot);
                     }else {
-                      var cellSpot = document.createTextNode(myPratiques.pratique[i].idSpot);
+                      var cellSpot = document.createTextNode(allPresences.presences[i].idSpot);
                     }
 
                     var cellspotAll = cellSpot;
@@ -177,15 +190,18 @@
   <!-- HEADER -->
   <header class="header">
     <ul id="ulHeader">
-        <li><a href="/home.html">Acceuil</a></li>
-        <li><a>Entrainements</a></li>
+        <li><input id="Déconnexion" type="button" value="Déconnexion" onclick="logoutUser();"/></li>
         <li><a href="/sport.html">Sports</a></li>
-        <li><input id="Deconnexion" type="button" value="Déconnexion" onclick="logoutUser();"/></li>
+        <li><a>Entrainements</a></li>
+        <li><a id="pagePincipale" href="">Acceuil</a></li>
+        <li class="liHead liHeadImg"><a href="/index.html"><img src="img/Sportime_logo_white.png" alt="Logo Sportime blanc"></a></li>
     </ul>
-  </header>
+</header>
+
+<div class="imgTitleVide"></div>
   <!-- BODY -->
-  <div id="entrainer">
-  <!--
+  <!--<div id="entrainer">
+  
   <form action="javascript:entrainement()">
     <p>Je vais m'entrainer ...</p>
     <br/>
@@ -215,42 +231,20 @@
     <input type="submit" value="J'y vais !">
   </form>
   -->
+  <div id="entrainementsProp">
+    <h1>Les entrainements proposés par d'autres utilisateurs</h1>
+    <div id="tabAllPresence"></div>
   </div>
-  <h1>Les entrainements proposés par d'autres utilisateurs</h1>
-  <div id="tabAllPresence"></div>
+  
   
   <!-- FOOTER -->
   <footer class="footer">
     <ul id="ulFooter">
-      <li class="liBot"><a href="/aPropos.html">À propos</a></li>
-      <li class="liBot"><a href="/politique.html">Politique de confidentialité</a></li>
-      <li class="liBot"><a href="/session.html">Session</a></li>
-      <li class="liBot"><a href="#reseaux">Réseaux sociaux</a></li>
+        <li class="liBot"><a href="/aPropos.html">À propos</a></li>
+        <li class="liBot"><a href="/politique.html">Politique de confidentialité</a></li>
+        <li class="liBot"><a href="/session.html">Session</a></li>
+        <li class="liBot"><a href="#reseaux">Réseaux sociaux</a></li>
     </ul>
-  </footer>
-
-  <!--Js 
-    <script>
-      async function blabla(){
-        let data = {username: document.getElementById("username").value,
-                  nom: document.getElementById("nom").value,
-                  prenom: document.getElementById("prenom").value,
-                  ville_fav: document.getElementById("ville_fav").value,
-                  tel: document.getElementById("tel").value,
-                  dateNaissance: document.getElementById("dateNaissance").value,
-                  mdp: document.getElementById("mdp").value
-                  }
-        let repUserCreate = await fetch("/api/utilisateur", {
-        method: "POST",
-        headers: {'Content-Type': 'application/json'}, 
-        body: JSON.stringify(data)
-      });
-      let myUser =  await repUserCreate.json()
-      let monIdDUSER = myUser.userId;
-      sessionStorage.setItem("_id", monIdDUSER);
-      window.location.href="/home.html"
-      };
-    </script>-->
-    
+</footer>
   </body>
 </html>

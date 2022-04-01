@@ -1,11 +1,47 @@
+  
+  @media (max-width: 640px) {
+    .grid-flex {
+      height: 40em;
+      display: -webkit-flex;
+      -webkit-flex-direction: column;
+      flex-direction: column; 
+     }
+    .col {
+      order:vertical;
+    }
+    .col-left {
+      -webkit-box-ordinal-group:0;
+      -webkit-order: 0;
+      -ms-flex-order: 0;
+      order: 0;
+    }
+    .col-text div p {
+      padding: 1em;
+    }
+    .Aligner-item {
+      width: 90%;
+    }
+  }
+
+  html {
+    overflow-x: hidden;
+  }
+  
+  body {
+    font-family: 'Prompt',sans-serif, Georgia;
+    display: block;
+    margin: 0px;
+  }
+
 /*TITRE SECTION*/
 #imgLogo {
   width: 50%;
 	height: 50%;
+  margin: 160px 0 80px 0;
 }
 
 #divHeader {
-  background-color: #333;
+  /* background-color: #333; */
   /* position: fixed; */
   width: 100%;
   display: block;
@@ -19,24 +55,47 @@
   margin: 0;
   margin-left: -8px;
   padding: 10px 20px 10px 0px;
-  background-color: #333;
+  background-color: rgb(19, 19, 19);
   /* position: fixed; */
   top: 0;
   width: 100%;
-  height: 25px;
+  height: auto;
   text-align: right;
+  position: fixed;
+  z-index: 1;
 }
 
 ul {
-  display: block;
-  list-style-type: disc;
-  margin-block-start: 0px;
-  margin-block-end: 0px;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  padding-inline-start: 40px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: rgb(19, 19, 19);
 }
 
+li {
+  float: right;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 20px 16px;
+  text-decoration: none;
+}
+
+.liHeadImg {
+  float: left;
+  padding-left: 50px;
+}
+
+.liHeadImg img {
+  height : 15px;
+  width: auto;
+}
+
+/*
 .liHead {
   float: right;
 }
@@ -48,10 +107,12 @@ ul {
   padding: 14px 16px;
   text-decoration: none;
 }
+*/
+
 
 /* Change the link color to #111 (black) on hover */
-.liHead a:hover {
-  background-color: #111;
+li:not(.liHeadImg) a:hover  {
+  background-color: #eb333f;
 }
 
 /*NAV FOOTER SECTION*/
@@ -61,8 +122,9 @@ ul {
   /* margin: 1%; /
   / padding: 0; */
   overflow: hidden;
-  background-color: #333;
+  background-color: rgb(19, 19, 19);
   padding: 10px 0 10px 30px;
+  margin-top: 40px;
 }
 
 .liBot {
@@ -73,21 +135,21 @@ ul {
   display: block;
   color: white;
   text-align: center;
-  padding: 14px 16px;
+  padding: 20px 16px;
   text-decoration: none;
 }
 
 /* Change the link color to #111 (black) on hover */
-.liBot a:hover {
+/* .liBot a:hover {
   background-color: #111;
-}
+} */
 
 /*INFO SECTION*/
 
 .sectionInfos {
   width: 80%;
   margin: auto;
-  padding-top: 80px;
+  padding-top: 30px;
 }
 
 .col-text {
@@ -141,33 +203,4 @@ ul {
     margin-block-end: 5px;
   }
   
-  @media (max-width: 640px) {
-    .grid-flex {
-      height: 40em;
-      display: -webkit-flex;
-      -webkit-flex-direction: column;
-      flex-direction: column; 
-     }
-    .col {
-      order:vertical;
-    }
-    .col-left {
-      -webkit-box-ordinal-group:0;
-      -webkit-order: 0;
-      -ms-flex-order: 0;
-      order: 0;
-    }
-    .col-text div p {
-      padding: 1em;
-    }
-    .Aligner-item {
-      width: 90%;
-    }
-  }
   
-  
-  body {
-    font-family:  'Prompt', Georgia, serif;
-    display: block;
-    margin: 0px;
-  }

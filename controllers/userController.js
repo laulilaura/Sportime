@@ -147,6 +147,7 @@ exports.getAllUsers = (req, res) => {
 exports.getOneUserById = (req, res) => {
     const headerAuth = req.headers['authorization'];
     const userId = jwtUtils.getId(headerAuth);
+    
     if (userId < 0) {
         return res.status(401).json({ 'erreur': 'Bad token'});
     }
