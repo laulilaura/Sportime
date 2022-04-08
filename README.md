@@ -21,8 +21,8 @@ __Projet se trouvant sur la branche master__
 
 *Vous aurez une présentation orale le 1er avril. Soyez aussi professionnel que possible dans votre communication orale et écrite.*  
 
-`Projet : __Sportime__  
-Application permettant à des utilisateurs de se creer un compte (ou se connecter) afin d'avoir accès à un profil personnel (où sont affichés leurs informations personnelles). L'utilisateur peut appartenir à une team, pratiquer des sports et connaître les entrainements proposés par d'autres utilisateurs. Un accès admionistrateur permet d'afficher tous les utilisateurs, et de créer et afficher une team, un sport et un spot.`  
+Projet : __Sportime__  
+> Application permettant à des utilisateurs de se creer un compte (ou se connecter) afin d'avoir accès à un profil personnel (où sont affichés leurs informations personnelles). L'utilisateur peut appartenir à une team, pratiquer des sports et connaître les entrainements proposés par d'autres utilisateurs. Un accès admionistrateur permet d'afficher tous les utilisateurs, et de créer et afficher une team, un sport et un spot.  
   
 Un utilisateur a un id et un username unique.  
 Une team a un id unique.  
