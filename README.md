@@ -6,8 +6,7 @@ __Projet se trouvant sur la branche master__
 *Vous devez créer une application web. Il n'y a aucune restriction quant aux technologies à utiliser (tant que vous justifiez votre choix dans votre rapport), ni au domaine d'activité (profitez-en !).*
 *Votre application,*
   * *doit utiliser une base de données avec*
-        *`au moins 5 tables,`*
-        *`au moins 2 triggers ou procédures stockées ;`*
+        *`* au moins 5 tables,`*
   * *- doit être conforme à REST (verbes, uri, etc.) ;*
   * *- doit être évolutive ;*
   * *- doit être déployé dans le cloud ;*
@@ -31,3 +30,5 @@ Un spot a un id et un nom unique.
 Une pratique a un id unique et se base sur un utilisateur et un sport.
 Une presence a un id unique et se base sur un utilisateur, un sport et un spot.
 Chaque entraînement proposé se base sur une clef unique utilisateur-sport-spot.
+
+Rendez-vous sur [Sportime](https://polytech-sportime.herokuapp.com/) !
