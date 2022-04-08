@@ -6,7 +6,7 @@ __Projet se trouvant sur la branche master__
 *Vous devez créer une application web. Il n'y a aucune restriction quant aux technologies à utiliser (tant que vous justifiez votre choix dans votre rapport), ni au domaine d'activité (profitez-en !).*  
 *Votre application,*  
   * doit utiliser une base de données avec  
-        ` - au moins 5 tables,`  
+        - au moins 5 tables,  
   * doit être conforme à REST (verbes, uri, etc.) ;  
   * doit être évolutive ;    
   * doit être déployé dans le cloud ;  
@@ -21,8 +21,8 @@ __Projet se trouvant sur la branche master__
 
 *Vous aurez une présentation orale le 1er avril. Soyez aussi professionnel que possible dans votre communication orale et écrite.*  
 
-Projet : __Sportime__  
-Application permettant à des utilisateurs de se creer un compte (ou se connecter) afin d'avoir accès à un profil personnel (où sont affichés leurs informations personnelles). L'utilisateur peut appartenir à une team, pratiquer des sports et connaître les entrainements proposés par d'autres utilisateurs. Un accès admionistrateur permet d'afficher tous les utilisateurs, et de créer et afficher une team, un sport et un spot.  
+`Projet : __Sportime__  
+Application permettant à des utilisateurs de se creer un compte (ou se connecter) afin d'avoir accès à un profil personnel (où sont affichés leurs informations personnelles). L'utilisateur peut appartenir à une team, pratiquer des sports et connaître les entrainements proposés par d'autres utilisateurs. Un accès admionistrateur permet d'afficher tous les utilisateurs, et de créer et afficher une team, un sport et un spot.`  
   
 Un utilisateur a un id et un username unique.  
 Une team a un id unique.  
