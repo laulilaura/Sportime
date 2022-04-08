@@ -4,7 +4,7 @@ Projet web Polytech Montpellier : Projet web
 **Projet se trouvant sur la branche master**
 
 *Vous devez créer une application web. Il n'y a aucune restriction quant aux technologies à utiliser (tant que vous justifiez votre choix dans votre rapport), ni au domaine d'activité (profitez-en !).
-*Votre application, 
+*Votre application,
   *- doit utiliser une base de données avec
         au moins 5 tables,
         au moins 2 triggers ou procédures stockées ;
