@@ -1,4 +1,4 @@
 # Sportime
-Projet web Polytech Montpellier : Projet web
+Web project for my third year of engineering school Polytech Montpellier : Free web project
 
-**Projet se trouvant sur la branche master**
+**The project is located on the master branch**
